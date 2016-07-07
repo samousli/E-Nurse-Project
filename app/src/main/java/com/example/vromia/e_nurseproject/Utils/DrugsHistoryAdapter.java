@@ -37,15 +37,8 @@ public class DrugsHistoryAdapter extends CursorAdapter {
         //TextView tvUnit = (TextView) view.findViewById(R.id.tvUnit);
 
         tvCategory.setText(cursor.getString(1));
-        String sep = " στις ";
-        /*
-        if (isDiet) {
-            tvUnit.setText("(μερίδες)");
-        } else {
-            tvUnit.setText("(λεπτά)");
-            sep = ", ";
-        }
-        */
+        String sep = " οΏ½οΏ½οΏ½οΏ½ ";
+
         tvDateTime.setText(cursor.getString(2) + sep + cursor.getString(4));
         tvAmount.setText(cursor.getString(3));
         tvCause.setText(cursor.getString(5));
@@ -63,12 +56,12 @@ public class DrugsHistoryAdapter extends CursorAdapter {
         TextView tvCause = (TextView) view.findViewById(R.id.tvCause);
 
         tvCategory.setText(cursor.getString(1));
-        String sep = " το ";
+        String sep = " οΏ½οΏ½ ";
         /*
         if (isDiet) {
-            tvUnit.setText("(μερίδες)");
+            tvUnit.setText("(οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½)");
         } else {
-            tvUnit.setText("(λεπτά)");
+            tvUnit.setText("(οΏ½οΏ½οΏ½οΏ½οΏ½)");
             sep = ", ";
         }
         */
