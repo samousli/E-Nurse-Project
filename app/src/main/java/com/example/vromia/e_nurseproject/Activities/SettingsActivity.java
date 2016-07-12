@@ -19,17 +19,19 @@ import android.widget.Toast;
 
 import com.example.vromia.e_nurseproject.Data.HeathDatabase;
 import com.example.vromia.e_nurseproject.R;
-import com.example.vromia.e_nurseproject.Utils.JSONParser;
+import com.example.vromia.e_nurseproject.Utils.HttpHandler;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by Nikos on 3/6/2015.
@@ -39,7 +41,6 @@ public class SettingsActivity extends PreferenceActivity {
     private boolean hasAnimations;
     private HeathDatabase db;
     private static String url = "http://nikozisi.webpages.auth.gr/enurse/sync_data.php";
-    private JSONParser jsonParser;
     private static final String TAG_SUCCESS = "success";
     private int success;
 
@@ -111,7 +112,6 @@ public class SettingsActivity extends PreferenceActivity {
 
 
                 if(haveNetworkConnection()){
-                    jsonParser=new JSONParser();
                     db=new HeathDatabase(SettingsActivity.this);
 
                     new SyncAppData().execute();
@@ -210,8 +210,7 @@ public class SettingsActivity extends PreferenceActivity {
             SharedPrefsManager manager=new SharedPrefsManager(SettingsActivity.this);
             int userID=manager.getPrefsUserID();
             Log.i("USERID", userID + "");
-            List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("userID", userID+""));
+            RequestParams p = new RequestParams("userID", userID);
 
             Cursor dietCursor=db.getAllDietItems();
             if(dietCursor.getCount()!=0){
@@ -227,15 +226,11 @@ public class SettingsActivity extends PreferenceActivity {
                     categories.put(category);
                     times.put(time);
                     dates.put(date);
-
-
                 }
-                params.add(new BasicNameValuePair("categories",categories.toString()));
-                params.add(new BasicNameValuePair("dates",dates.toString()));
-                params.add(new BasicNameValuePair("times", times.toString()));
-
+                p.put("categories",categories.toString());
+                p.put("dates",dates.toString());
+                p.put("times", times.toString());
             }
-
 
             Cursor workoutCursor=db.getAllWorkoutItems();
             if(workoutCursor.getCount()!=0){
@@ -253,23 +248,23 @@ public class SettingsActivity extends PreferenceActivity {
                     durationss.put((int)duration +"");
                     dates.put(date);
                 }
-
-                params.add(new BasicNameValuePair("WCategories",categories.toString()));
-                params.add(new BasicNameValuePair("WDates",dates.toString()));
-                params.add(new BasicNameValuePair("durations", durationss.toString()));
+                p.put("WCategories", categories.toString());
+                p.put("WDates", categories.toString());
+                p.put("durations", durationss.toString());
             }
 
+            HttpHandler.post(url, p, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers,
+                                      JSONObject response) {
+                    try {
+                        success = response.getInt(TAG_SUCCESS);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+             });
 
-
-            JSONObject json = jsonParser.makeHttpRequest(url, "POST", params);
-
-            try {
-
-                success = json.getInt(TAG_SUCCESS);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
 
 
             return "";

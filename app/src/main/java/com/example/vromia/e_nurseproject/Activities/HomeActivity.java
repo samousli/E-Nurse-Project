@@ -22,8 +22,11 @@ import com.example.vromia.e_nurseproject.Data.HeathDatabase;
 import com.example.vromia.e_nurseproject.Data.WorkoutItem;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.GridAdapter;
-import com.example.vromia.e_nurseproject.Utils.JSONParser;
+import com.example.vromia.e_nurseproject.Utils.HttpHandler;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -33,6 +36,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by Vromia on 2/6/2015.
@@ -45,7 +50,7 @@ public class HomeActivity extends Activity {
     private HeathDatabase db;
 
     private static String url = "http://nikozisi.webpages.auth.gr/enurse/get_data.php";
-    private JSONParser jsonParser;
+    private HttpHandler httpHandler;
     private ArrayList<DietItem> dietItems;
     private ArrayList<WorkoutItem> workoutItems;
 
@@ -69,7 +74,7 @@ public class HomeActivity extends Activity {
 
         if (haveNetworkConnection()) {
 
-            jsonParser = new JSONParser();
+            httpHandler = new HttpHandler();
             dietItems = new ArrayList<>();
             workoutItems = new ArrayList<>();
             db = new HeathDatabase(HomeActivity.this);
@@ -163,113 +168,90 @@ public class HomeActivity extends Activity {
         protected String doInBackground(String... args) {
             SharedPrefsManager manager = new SharedPrefsManager(HomeActivity.this);
             int userID = manager.getPrefsUserID();
-            Log.i("USERID", userID + "");
-            List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("userID", userID + ""));
 
-            JSONObject json = jsonParser.makeHttpRequest(url, "POST", params);
+            RequestParams params = new RequestParams("userID", userID);
 
-            try {
+            HttpHandler.post(url, params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    // If the response is JSONObject instead of expected JSONArray
+                    try {
+                        JSONArray dietArray = response.getJSONArray(TAG_DIET);
+                        JSONArray workoutArray = response.getJSONArray(TAG_WORKOUT);
 
-                JSONArray dietArray = json.getJSONArray(TAG_DIET);
-                JSONArray workoutArray = json.getJSONArray(TAG_WORKOUT);
+                        Cursor dietCursor = db.getAllDietItems();
+                        Cursor workoutCursor = db.getAllWorkoutItems();
+                        if (dietCursor.getCount() != dietArray.length()) {
 
+                            updateDiet = true;
+                            for (int i = 0; i < dietArray.length(); i++) {
+                                JSONObject c = dietArray.getJSONObject(i);
+                                String meal = c.getString(TAG_MEAL);
+                                String date = c.getString(TAG_DATE);
+                                String mealTime = c.getString(TAG_MEALTIME);
 
-                Cursor dietCursor = db.getAllDietItems();
-                Cursor workoutCursor = db.getAllWorkoutItems();
-                if (dietCursor.getCount() != dietArray.length()) {
+                                String dateTokens[] = date.split(" ");
+                                String mealTimeTokens[] = mealTime.split(":");
 
-                    updateDiet = true;
+                                DietItem dietItem = new DietItem(meal, dateTokens[0], 1,
+                                        mealTimeTokens[0] + ":" + mealTimeTokens[1]);
+                                dietItems.add(dietItem);
+                            }
+                        }
 
-                    for (int i = 0; i < dietArray.length(); i++) {
-                        JSONObject c = dietArray.getJSONObject(i);
+                        if (workoutCursor.getCount() != workoutArray.length()) {
+                            updateWorkout = true;
+                            for (int i = 0; i < workoutArray.length(); i++) {
+                                JSONObject c = workoutArray.getJSONObject(i);
 
-                        String meal = c.getString(TAG_MEAL);
-                        String date = c.getString(TAG_DATE);
-                        String mealTime = c.getString(TAG_MEALTIME);
+                                double duration = c.getDouble(TAG_DURATION);
+                                String date = c.getString(TAG_DATE);
+                                String type = c.getString(TAG_TYPE);
 
-                        String dateTokens[] = date.split(" ");
-                        String mealTimeTokens[] = mealTime.split(":");
-
-                        DietItem dietItem = new DietItem(meal, dateTokens[0], 1, mealTimeTokens[0] + ":" + mealTimeTokens[1]);
-                        dietItems.add(dietItem);
-
+                                String dateTokens[] = date.split(" ");
+                                WorkoutItem item = new WorkoutItem(type, dateTokens[0],
+                                        duration, dateTokens[1]);
+                                workoutItems.add(item);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-
                 }
-
-
-                if (workoutCursor.getCount() != workoutArray.length()) {
-
-                    updateWorkout = true;
-                    for (int i = 0; i < workoutArray.length(); i++) {
-                        JSONObject c = workoutArray.getJSONObject(i);
-
-                        double duration = c.getDouble(TAG_DURATION);
-                        String date = c.getString(TAG_DATE);
-                        String type = c.getString(TAG_TYPE);
-
-                        String dateTokens[] = date.split(" ");
-
-
-                        WorkoutItem item = new WorkoutItem(type, dateTokens[0], duration, dateTokens[1]);
-                        workoutItems.add(item);
-
-                    }
-
-
-                }
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+            });
 
             return "";
         }
-
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             boolean update = false;
             if (updateDiet) {
-
                 for (int i = 0; i < dietItems.size(); i++) {
                     DietItem item = dietItems.get(i);
                     if (!db.dietTupleExists(item.getCategory(), item.getTime())) {
                         db.InsertDiet(item);
                         update = true;
                     }
-
                 }
-
             }
 
             if (updateWorkout) {
-
                 for (int i = 0; i < workoutItems.size(); i++) {
                     WorkoutItem workoutItem = workoutItems.get(i);
                     if (!db.workoutTupleExists(workoutItem.getCategory(), workoutItem.getWorkTime(), workoutItem.getDate())) {
                         db.InsertWorkout(workoutItem);
                         update = true;
                     }
-
                 }
-
             }
-
 
             if (update) {
                 Toast.makeText(HomeActivity.this, "Πραγματοποιήθηκε ενημέρωση των δεδομένων σας", Toast.LENGTH_LONG).show();
             }
 
-
             db.close();
-
-
         }
     }
 

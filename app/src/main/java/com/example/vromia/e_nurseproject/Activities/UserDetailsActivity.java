@@ -26,8 +26,10 @@ import android.widget.Toast;
 
 import com.example.vromia.e_nurseproject.Data.HeathDatabase;
 import com.example.vromia.e_nurseproject.R;
-import com.example.vromia.e_nurseproject.Utils.JSONParser;
+import com.example.vromia.e_nurseproject.Utils.HttpHandler;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -36,6 +38,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 
 /**
@@ -75,7 +79,6 @@ public class UserDetailsActivity extends Activity {
     private static final String TAG_ID = "userID";
     private static final String TAG_HEIGHT = "height";
 
-    private JSONParser jsonParser;
     private ProgressDialog pDialog;
 
     private SharedPrefsManager manager;
@@ -171,8 +174,6 @@ public class UserDetailsActivity extends Activity {
         hdb = new HeathDatabase(UserDetailsActivity.this);
         ArrayList<String> full_names = hdb.getDoctorsFullName();
         hdb.close();
-
-        jsonParser = new JSONParser();
 
         final ArrayAdapter adapter = new ArrayAdapter(UserDetailsActivity.this, R.layout.spinner_item, R.id.tvSpinnerCategories, full_names);
         sDoctors.setAdapter(adapter);
@@ -319,22 +320,7 @@ public class UserDetailsActivity extends Activity {
                     SistorikoPathiseon = SistorikoPathiseon.substring(0, SistorikoPathiseon.length() - 1);
                  }
 
-
-                Log.i("nikos", SistorikoPathiseon);
-/*
-                if (Silikia.equals("")) {
-                    Silikia = "0";
-                }
-                if (Sypsos.equals("")) {
-                    Sypsos = "0";
-                }
-                if (Sbaros.equals("")) {
-                    Sbaros = "0";
-                }*/
-
-
                 SharedPrefsManager spmanager = new SharedPrefsManager(UserDetailsActivity.this);
-
 
                 Log.i("nikos", "userid = " + userID + "   prefs=" + manager.getPrefsUserID());
                 if (userID == -1 && manager.getPrefsUserID() == -1) {
@@ -350,11 +336,21 @@ public class UserDetailsActivity extends Activity {
                         spmanager.setPrefsUsername(SUsername);
                         spmanager.setPrefsPassword(SPassword);
                         spmanager.commit();
-                        new createUser().execute();
+
+                        // Get all data from the UI and pass to the async runner, so the call to the
+                        // server can be made.
+                        String username = etUsername.getText().toString();
+                        String password = etPassword.getText().toString();
+                        String name = onoma.getText().toString();
+                        String surname = etSurname.getText().toString();
+                        String age = ilikia.getText().toString();
+                        String weight = baros.getText().toString();
+                        String height = ypsos.getText().toString();
+                        new createUser().execute(username, password, name,
+                                surname, age, Integer.toString(sex), weight, height);
 
                     }
                 }
-
 
                 spmanager.startEditing();
 
@@ -405,38 +401,32 @@ public class UserDetailsActivity extends Activity {
         //Check user starting background thread
         @Override
         protected String doInBackground(String... args) {
+            RequestParams p = new RequestParams("patientID", userID);
+            HttpHandler.post(user_details_url, p, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    try {
+                        int success = response.getInt(TAG_SUCCESS);
 
-            //Building Parameters to pass to php script check_user
-            List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("patientID", userID + ""));
+                        if (success == 1) {
+                            Log.i("Success", "success");
+                            age = response.getInt(TAG_AGE);
+                            male = response.getInt(TAG_MALE);
+                            history = response.getString(TAG_HISTORY);
+                            weight = response.getInt(TAG_WEIGHT);
+                            height=response.getInt(TAG_HEIGHT);
 
+                            Log.i("values", age + " - " + male + " - " + history + " - " + weight);
 
-            //Getting JSON object passing  the url, the params, and the method that you want to pass the params
-            JSONObject json = jsonParser.makeHttpRequest(user_details_url, "POST", params);
+                        } else {
+                            Log.i("UserSuccess", "Fail");
+                        }
 
-            try {
-                int success = json.getInt(TAG_SUCCESS);
-
-                if (success == 1) {
-                    Log.i("Success", "success");
-                    age = json.getInt(TAG_AGE);
-                    male = json.getInt(TAG_MALE);
-                    history = json.getString(TAG_HISTORY);
-                    weight = json.getInt(TAG_WEIGHT);
-                    height=json.getInt(TAG_HEIGHT);
-
-
-                    Log.i("values", age + " - " + male + " - " + history + " - " + weight);
-
-
-                } else {
-                    Log.i("UserSuccess", "Fail");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            });
 
             return "";
         }
@@ -460,53 +450,43 @@ public class UserDetailsActivity extends Activity {
 
 
     }
-
-
     class createUser extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... args) {
             List<NameValuePair> params = new ArrayList<>();
-
-            params.add(new BasicNameValuePair("username", etUsername.getText().toString()));
-            params.add(new BasicNameValuePair("password", etPassword.getText().toString()));
-            params.add(new BasicNameValuePair("name", onoma.getText().toString()));
-            params.add(new BasicNameValuePair("surname", etSurname.getText().toString()));
-            params.add(new BasicNameValuePair("age", Integer.parseInt(ilikia.getText().toString()) + ""));
-            params.add(new BasicNameValuePair("male", sex + ""));
-//            params.add(new BasicNameValuePair("history", istorikoPathiseon.getText().toString()));
-            params.add(new BasicNameValuePair("weight", Float.parseFloat(baros.getText().toString()) + ""));
-            params.add(new BasicNameValuePair("height", Float.parseFloat(ypsos.getText().toString()) + ""));
-
+            /* Request param format:
+            {
+                String username, String password, String name, String surname???,
+                int age, int male,  #!! 1 for male, 0 for female
+                float weight, float height
+            }
+            */
             String doctor_full_name = sDoctors.getSelectedItem().toString();
             String tokens[] = doctor_full_name.split(" ");
+            RequestParams p = new RequestParams();
+            p.put("doctor_name", tokens[0]);
+            p.put("doctor_surname", tokens[1]);
 
-            params.add(new BasicNameValuePair("doctor_name", tokens[0]));
-            params.add(new BasicNameValuePair("doctor_surname", tokens[1]));
+            HttpHandler.post(create_user_url, p, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    try {
+                        cuSuccess = response.getInt(TAG_SUCCESS);
+                        int userID = response.getInt(TAG_ID);
+                        SharedPrefsManager manager = new SharedPrefsManager(UserDetailsActivity.this);
+                        manager.startEditing();
+                        manager.setPrefsUserID(userID);
+                        manager.commit();
 
-            JSONObject json = jsonParser.makeHttpRequest(create_user_url, "POST", params);
-
-            try {
-                cuSuccess = json.getInt(TAG_SUCCESS);
-                int userID = json.getInt(TAG_ID);
-                SharedPrefsManager manager = new SharedPrefsManager(UserDetailsActivity.this);
-                manager.startEditing();
-                manager.setPrefsUserID(userID);
-                manager.commit();
-
-
-                Log.i("USERID", userID + "");
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
             return "";
         }
-
     }
-
 
     @Override
     public void onBackPressed() {
@@ -516,7 +496,4 @@ public class UserDetailsActivity extends Activity {
         if (PreferenceManager.getDefaultSharedPreferences(UserDetailsActivity.this).getBoolean("key_animations", false))
             overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
-
-
-
 }
