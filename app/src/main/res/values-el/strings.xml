@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">E-Nurse Project</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="foodNames">
+        <item>Κοτόπουλο</item>
+        <item>Χοιρινό</item>
+        <item>Όσπρια</item>
+        <item>Ζυμαρικά</item>
+    </string-array>
+
+    <string-array name="workoutNames">
+        <item>Τρέξιμο</item>
+        <item>Γυμναστήριο</item>
+        <item>Άθλημα</item>
+        <item>Sex</item>
+    </string-array>
+
+    <string-array name="drugNames">
+        <item>Depon</item>
+        <item>Panadol</item>
+        <item>Xanax</item>
+        <item>Vicodin</item>
+    </string-array>
+
+    <string-array name="actions">
+        <item>Ιστορικό</item>
+        <item>Στοιχεία</item>
+        <item>E-Nurse</item>
+        <item>Εξαγωγή</item>
+        <item>Έξοδος</item>
+    </string-array>
+
+    <string name="close_drawer">Closed</string>
+    <string name="open_drawer">Opened</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="getDrugDescription">Πάρτε το χάπι σας</string>
+    <string name="time_to_workout">Είναι η ώρα της καθημερινής σας γυμναστικής</string>
+    <string name="reminder">Υπενθύμηση!!!</string>
+
+
+</resources>

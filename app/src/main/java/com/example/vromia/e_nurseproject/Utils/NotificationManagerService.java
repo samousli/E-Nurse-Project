@@ -1,4 +1,4 @@
-package com.example.vromia.e_nurseproject.Activities;
+package com.example.vromia.e_nurseproject.Utils;
 
 
 import android.app.Notification;
@@ -12,7 +12,6 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.vromia.e_nurseproject.R;
-import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
 
 import java.util.Calendar;
 

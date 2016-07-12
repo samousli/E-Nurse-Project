@@ -10,7 +10,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -18,24 +17,20 @@ import android.widget.Toast;
 
 import com.example.vromia.e_nurseproject.Data.DietItem;
 import com.example.vromia.e_nurseproject.Data.GridItem;
-import com.example.vromia.e_nurseproject.Data.HeathDatabase;
+import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.Data.WorkoutItem;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.GridAdapter;
 import com.example.vromia.e_nurseproject.Utils.HttpHandler;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -47,7 +42,7 @@ public class HomeActivity extends Activity {
     private GridView gridView;
     private ArrayList<GridItem> items;
 
-    private HeathDatabase db;
+    private HealthDatabase db;
 
     private static String url = "http://nikozisi.webpages.auth.gr/enurse/get_data.php";
     private HttpHandler httpHandler;
@@ -77,7 +72,7 @@ public class HomeActivity extends Activity {
             httpHandler = new HttpHandler();
             dietItems = new ArrayList<>();
             workoutItems = new ArrayList<>();
-            db = new HeathDatabase(HomeActivity.this);
+            db = new HealthDatabase(HomeActivity.this);
 
             new SyncWebData().execute();
 

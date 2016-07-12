@@ -1,9 +1,11 @@
-package com.example.vromia.e_nurseproject.Activities;
+package com.example.vromia.e_nurseproject.Utils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import com.example.vromia.e_nurseproject.Utils.NotificationManagerService;
 
 
 public class StartServiceReceiver extends BroadcastReceiver {

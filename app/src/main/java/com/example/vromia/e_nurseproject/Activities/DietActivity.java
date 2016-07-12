@@ -16,7 +16,7 @@ import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDi
 import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
 import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
 import com.example.vromia.e_nurseproject.Data.DietItem;
-import com.example.vromia.e_nurseproject.Data.HeathDatabase;
+import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
 
 import java.util.ArrayList;
@@ -137,7 +137,7 @@ public class DietActivity extends FragmentActivity {
                 }
                 String foodName = spinner.getSelectedItem().toString();
 
-                HeathDatabase db = new HeathDatabase(DietActivity.this);//instance of current database
+                HealthDatabase db = new HealthDatabase(DietActivity.this);//instance of current database
 
                 DietItem item = new DietItem(foodName, date, quantity, hour);
                 db.InsertDiet(item);

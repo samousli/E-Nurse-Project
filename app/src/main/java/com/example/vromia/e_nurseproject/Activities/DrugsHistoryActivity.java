@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
-import com.example.vromia.e_nurseproject.Data.HeathDatabase;
+import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.DrugsHistoryAdapter;
 import com.example.vromia.e_nurseproject.Utils.MyDrugsAdapter;
@@ -26,7 +26,7 @@ import java.util.Calendar;
 public class DrugsHistoryActivity extends FragmentActivity {
 
     private ListView lv;
-    private HeathDatabase db;
+    private HealthDatabase db;
     private Cursor cursor;
     private DrugsHistoryAdapter adapter;
     private MyDrugsAdapter myDrugs_adapter;
@@ -47,7 +47,7 @@ public class DrugsHistoryActivity extends FragmentActivity {
 
         lv = (ListView) findViewById(R.id.lvHistory);
 
-        db = new HeathDatabase(DrugsHistoryActivity.this);
+        db = new HealthDatabase(DrugsHistoryActivity.this);
         cursor = db.getDistDrugs();
 
 //        startManagingCursor(cursor);

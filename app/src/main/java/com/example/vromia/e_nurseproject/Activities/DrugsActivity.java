@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
 import com.example.vromia.e_nurseproject.Data.DrugsItem;
-import com.example.vromia.e_nurseproject.Data.HeathDatabase;
+import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
 
 import java.util.ArrayList;
@@ -154,7 +154,7 @@ public class DrugsActivity extends FragmentActivity {
                 }
 //                String cause = etCause.getText().toString();
                 String cause = textView.getText().toString();
-                HeathDatabase db = new HeathDatabase(DrugsActivity.this);//instance of current database
+                HealthDatabase db = new HealthDatabase(DrugsActivity.this);//instance of current database
                 DrugsItem item = new DrugsItem(exName, date, quantity, tod,cause);
                 Log.i("msg", exName + " " + date + " " + quantity + " " + tod);
                 db.InsertDrugs(item);

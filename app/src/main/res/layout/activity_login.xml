@@ -52,7 +52,6 @@
             android:layout_weight="0.4"
             android:editable="false"
             android:ems="10"
-            android:hint="nzisis"
             android:inputType="text"
             android:textColor="#de000000" />
 
@@ -92,9 +91,10 @@
             android:layout_weight="0.4"
             android:editable="false"
             android:ems="10"
-            android:hint="78837582a"
             android:inputType="textPassword"
-            android:textColor="#de000000" />
+            android:textColor="#de000000"
+            android:password="true"
+            android:selectAllOnFocus="true" />
 
     </LinearLayout>
 

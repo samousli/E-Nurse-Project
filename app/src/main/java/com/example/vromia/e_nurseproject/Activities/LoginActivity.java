@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.vromia.e_nurseproject.Data.DoctorItem;
-import com.example.vromia.e_nurseproject.Data.HeathDatabase;
+import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.HttpHandler;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
@@ -28,14 +28,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -56,7 +51,7 @@ public class LoginActivity extends Activity {
     private int userID;
     private String userName, userSuname;
     private int success, dsuccess;
-    private HeathDatabase hdb;
+    private HealthDatabase hdb;
     private JSONArray jsonArray;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -101,7 +96,7 @@ public class LoginActivity extends Activity {
         userID = -1;
         success = -1;
         dsuccess = -1;
-        hdb = new HeathDatabase(LoginActivity.this);
+        hdb = new HealthDatabase(LoginActivity.this);
         userName = userSuname = "";
 
         if (haveNetworkConnection()) {

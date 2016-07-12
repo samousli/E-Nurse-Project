@@ -15,7 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
-import com.example.vromia.e_nurseproject.Data.HeathDatabase;
+import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.Data.WorkoutItem;
 import com.example.vromia.e_nurseproject.R;
 
@@ -139,7 +139,7 @@ public class WorkoutActivity extends FragmentActivity {
                 } catch (NumberFormatException e) {
                     Toast.makeText(WorkoutActivity.this, "Plz insert a numeric value", Toast.LENGTH_LONG);
                 }
-                HeathDatabase db = new HeathDatabase(WorkoutActivity.this);//instance of current database
+                HealthDatabase db = new HealthDatabase(WorkoutActivity.this);//instance of current database
                 WorkoutItem item = new WorkoutItem(exName, date, quantity, tod);
                 Log.i("msg", exName + " " + date + " " + quantity + " " + tod);
                 db.InsertWorkout(item);

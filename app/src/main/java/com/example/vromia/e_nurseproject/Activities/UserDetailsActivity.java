@@ -24,7 +24,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.vromia.e_nurseproject.Data.HeathDatabase;
+import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.HttpHandler;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
@@ -32,7 +32,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,7 +54,7 @@ public class UserDetailsActivity extends Activity {
     private ImageButton btAdd;
     private RadioButton rb_male, rb_female;
     private String Sfylo = "";
-    private HeathDatabase hdb;
+    private HealthDatabase hdb;
     private Spinner sDoctors;
 
     private ArrayList<String> diseases;
@@ -171,7 +170,7 @@ public class UserDetailsActivity extends Activity {
     }
 
     private void setUpUI() {
-        hdb = new HeathDatabase(UserDetailsActivity.this);
+        hdb = new HealthDatabase(UserDetailsActivity.this);
         ArrayList<String> full_names = hdb.getDoctorsFullName();
         hdb.close();
 

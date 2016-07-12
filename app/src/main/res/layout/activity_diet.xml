@@ -126,7 +126,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="0.7" />
+                    android:layout_weight="0.7"
+                    android:contentDescription="time" />
 
 
             </LinearLayout>
@@ -164,7 +165,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="0.7" />
+                    android:layout_weight="0.7"
+                    android:contentDescription="date" />
             </LinearLayout>
 
 

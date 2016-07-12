@@ -17,7 +17,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.vromia.e_nurseproject.Data.HeathDatabase;
+import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.HttpHandler;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
@@ -28,18 +28,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import cz.msebera.android.httpclient.Header;
-
 /**
  * Created by Nikos on 3/6/2015.
  */
 public class SettingsActivity extends PreferenceActivity {
 
     private boolean hasAnimations;
-    private HeathDatabase db;
+    private HealthDatabase db;
     private static String url = "http://nikozisi.webpages.auth.gr/enurse/sync_data.php";
     private static final String TAG_SUCCESS = "success";
     private int success;
@@ -108,11 +103,11 @@ public class SettingsActivity extends PreferenceActivity {
             public boolean onPreferenceClick(Preference preference) {
 
                 //TODO export to file
-             db=new HeathDatabase(SettingsActivity.this);
+             db=new HealthDatabase(SettingsActivity.this);
 
 
                 if(haveNetworkConnection()){
-                    db=new HeathDatabase(SettingsActivity.this);
+                    db=new HealthDatabase(SettingsActivity.this);
 
                     new SyncAppData().execute();
                 }else{

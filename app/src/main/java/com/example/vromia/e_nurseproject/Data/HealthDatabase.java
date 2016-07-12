@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by Vromia on 17/12/2014.
  */
-public class HeathDatabase extends SQLiteOpenHelper {
+public class HealthDatabase extends SQLiteOpenHelper {
 
     private static final int Database_Version = 1;
     private static final String Database_Name = "HealthDatabase";
@@ -69,7 +69,7 @@ public class HeathDatabase extends SQLiteOpenHelper {
     private SQLiteDatabase db;
 
 
-    public HeathDatabase(Context context) {
+    public HealthDatabase(Context context) {
         super(context, Database_Name, null, Database_Version);
         db = this.getWritableDatabase();
     }

@@ -1,4 +1,4 @@
-package com.example.vromia.e_nurseproject.Activities;
+package com.example.vromia.e_nurseproject.Utils;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
