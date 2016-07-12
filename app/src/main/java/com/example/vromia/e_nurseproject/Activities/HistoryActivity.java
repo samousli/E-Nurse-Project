@@ -122,7 +122,7 @@ public class HistoryActivity extends FragmentActivity {
             case R.id.filtersWorkoutCategory:
                 categories = getResources().getStringArray(R.array.workoutNames);
 
-                builder.setTitle("Κατηγορίες");
+                builder.setTitle(getString(R.string.categories));
 
                 builder.setItems(categories, new DialogInterface.OnClickListener() {
                     @Override
@@ -144,9 +144,13 @@ public class HistoryActivity extends FragmentActivity {
                 dateDialog.show(manager, "Tag");
                 break;
             case R.id.filtersWorkoutPeriod:
-                final String periods[] = new String[]{"Πρωί","Μεσημέρι","Βράδυ"};
+                final String periods[] = new String[]{
+                        getString(R.string.morning),
+                        getString(R.string.midday),
+                        getString(R.string.evening)
+                };
 
-                builder.setTitle("Περίοδοι");
+                builder.setTitle(getString(R.string.time_period));
 
                 builder.setItems(periods, new DialogInterface.OnClickListener() {
                     @Override

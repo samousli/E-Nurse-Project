@@ -83,14 +83,22 @@ public class HomeActivity extends Activity {
         gridView = (GridView) findViewById(R.id.gridview);
         items = new ArrayList<>();
 
-        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_food), "Διατροφή"));
-        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_excercise), "Άσκηση"));
-        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_drugs), "Φάρμακα"));
-        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_profile), "Προφίλ"));
-        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_history), "Ιστορικό"));
-        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_drugs_history), "Ιστορικό Φαρμάκων"));
-        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_settings), "Ρυθμίσεις"));
-        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_exit), "Έξοδος"));
+        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.ic_food), getString(R.string.diet)));
+        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.ic_excercise), getString(R.string.workout)));
+        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.ic_drugs), getString(R.string.drugs)));
+        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.ic_profile), getString(R.string.profile)));
+        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.ic_history), getString(R.string.history)));
+        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.ic_drugs_history), getString(R.string.drug_history)));
+        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.ic_settings), getString(R.string.settings)));
+        items.add(new GridItem(BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.ic_exit), getString(R.string.exit)));
 
 
         GridAdapter adapter = new GridAdapter(HomeActivity.this, R.layout.grid_item_menu, items);
@@ -243,7 +251,7 @@ public class HomeActivity extends Activity {
             }
 
             if (update) {
-                Toast.makeText(HomeActivity.this, "Πραγματοποιήθηκε ενημέρωση των δεδομένων σας", Toast.LENGTH_LONG).show();
+                Toast.makeText(HomeActivity.this, getString(R.string.dataUpdated), Toast.LENGTH_LONG).show();
             }
 
             db.close();

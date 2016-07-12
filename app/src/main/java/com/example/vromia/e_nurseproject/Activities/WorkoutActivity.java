@@ -97,21 +97,21 @@ public class WorkoutActivity extends FragmentActivity {
         bMorn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tod = "Πρωί";
+                tod = getString(R.string.morning);
             }
         });
 
         bNoon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tod = "Μεσημέρι";
+                tod = getString(R.string.midday);
             }
         });
 
         bNight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tod = "Βράδυ";
+                tod = getString(R.string.evening);
             }
         });
 
@@ -137,14 +137,16 @@ public class WorkoutActivity extends FragmentActivity {
                 try {
                     quantity = Double.valueOf(quantField.getText().toString());
                 } catch (NumberFormatException e) {
-                    Toast.makeText(WorkoutActivity.this, "Plz insert a numeric value", Toast.LENGTH_LONG);
+                    Toast.makeText(WorkoutActivity.this, getString(R.string.invalidEntry_Numeric),
+                            Toast.LENGTH_LONG);
                 }
                 HealthDatabase db = new HealthDatabase(WorkoutActivity.this);//instance of current database
                 WorkoutItem item = new WorkoutItem(exName, date, quantity, tod);
                 Log.i("msg", exName + " " + date + " " + quantity + " " + tod);
                 db.InsertWorkout(item);
                 db.close();
-                Toast.makeText(WorkoutActivity.this, "Εισαγωγή επιτυχής", Toast.LENGTH_LONG).show();
+                Toast.makeText(WorkoutActivity.this, getString(R.string.successfulEntry),
+                        Toast.LENGTH_LONG).show();
                 finish();
 
             }

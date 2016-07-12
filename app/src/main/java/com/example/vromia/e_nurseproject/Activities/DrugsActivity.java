@@ -41,7 +41,9 @@ public class DrugsActivity extends FragmentActivity {
     private String date, tod;
 
 
-    String[] name = {"Πονοκέφαλος", "Ημικρανία", "Πονόλαιμος", "Πόνοι Περιόδου", "Πίεση", "Κάψιμο", "Πυρετός", "Ναυτία"};
+    String[] name = {
+            "Πονοκέφαλος", "Ημικρανία", "Πονόλαιμος", "Πόνοι Περιόδου",
+            "Πίεση", "Κάψιμο", "Πυρετός", "Ναυτία"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,21 +112,21 @@ public class DrugsActivity extends FragmentActivity {
         bMorn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tod = "Πρωί";
+                tod = getString(R.string.morning);
             }
         });
 
         bNoon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tod = "Μεσημέρι";
+                tod = getString(R.string.midday);
             }
         });
 
         bNight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tod = "Βράδυ";
+                tod = getString(R.string.evening);
             }
         });
 
@@ -150,7 +152,8 @@ public class DrugsActivity extends FragmentActivity {
                 try {
                     quantity = Double.valueOf(quantField.getText().toString());
                 } catch (NumberFormatException e) {
-                    Toast.makeText(DrugsActivity.this, "Plz insert a numeric value", Toast.LENGTH_LONG);
+                    Toast.makeText(DrugsActivity.this,
+                            getString(R.string.invalidEntry_Numeric), Toast.LENGTH_LONG);
                 }
 //                String cause = etCause.getText().toString();
                 String cause = textView.getText().toString();
@@ -159,7 +162,7 @@ public class DrugsActivity extends FragmentActivity {
                 Log.i("msg", exName + " " + date + " " + quantity + " " + tod);
                 db.InsertDrugs(item);
                 db.close();
-                Toast.makeText(DrugsActivity.this, "Εισαγωγή επιτυχής", Toast.LENGTH_LONG).show();
+                Toast.makeText(DrugsActivity.this, getString(R.string.successfulEntry), Toast.LENGTH_LONG).show();
                 finish();
 
             }

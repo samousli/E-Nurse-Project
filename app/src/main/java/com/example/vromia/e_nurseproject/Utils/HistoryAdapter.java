@@ -24,6 +24,8 @@ public class HistoryAdapter extends CursorAdapter {
         super(context, c);
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.isDiet = isDiet;
+
+
     }
 
     @Override
@@ -60,11 +62,11 @@ public class HistoryAdapter extends CursorAdapter {
         TextView tvUnit = (TextView) view.findViewById(R.id.tvUnit);
 
         tvCategory.setText(cursor.getString(1));
-        String sep = " στις ";
+        String sep = inflater.getContext().getString(R.string.date_time_separator) + " ";
         if (isDiet) {
-            tvUnit.setText("(μερίδες)");
+            tvUnit.setText("(" + inflater.getContext().getString(R.string.servings) + ")");
         } else {
-            tvUnit.setText("(λεπτά)");
+            tvUnit.setText("(" + inflater.getContext().getString(R.string.minutes) + ")");
             sep = ", ";
         }
         tvDateTime.setText(cursor.getString(2) + sep+ cursor.getString(4));

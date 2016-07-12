@@ -268,8 +268,8 @@ public class UserDetailsActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
-                    Toast.makeText(UserDetailsActivity.this, "Clicked item;" + fName,
-                            Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(UserDetailsActivity.this, "Clicked item;" + fName,
+                    //        Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -280,10 +280,10 @@ public class UserDetailsActivity extends Activity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // TODO Auto-generated method stub
                 if (rb_male.isChecked()) {
-                    Sfylo = "Άνδρας";
+                    Sfylo = getString(R.string.male);
                     sex = 1;
                 } else if (rb_female.isChecked()) {
-                    Sfylo = "Γυναίκα";
+                    Sfylo = getString(R.string.female);
                     sex = 0;
                 }
             }
@@ -327,7 +327,9 @@ public class UserDetailsActivity extends Activity {
                     SPassword = String.valueOf(etPassword.getText());
 
                     if (SUsername.equals("")) {
-                        Toast.makeText(UserDetailsActivity.this, "Παρακαλώ γράψτε τα πεδία Όνομα Λογαριασμού - Κωδικός", Toast.LENGTH_LONG).show();
+                        //"Παρακαλώ γράψτε τα πεδία Όνομα Λογαριασμού - Κωδικός"
+                        Toast.makeText(UserDetailsActivity.this,
+                                getString(R.string.error_insertUsernamePassword), Toast.LENGTH_LONG).show();
                         flag = false;
                     } else {
                         flag = true;

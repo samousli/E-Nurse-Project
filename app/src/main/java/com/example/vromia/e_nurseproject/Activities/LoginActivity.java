@@ -139,7 +139,7 @@ public class LoginActivity extends Activity {
             }).start();
 
         } else {
-            Toast.makeText(LoginActivity.this, "Παρακαλώ συνδεθείτε στο Διαδίκτυο", Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this, getString(R.string.no_network), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -154,7 +154,7 @@ public class LoginActivity extends Activity {
 
                     new CheckUser().execute(username, password);
                 } else {
-                    Toast.makeText(LoginActivity.this, "Παρακαλώ συνδεθείτε στο Διαδίκτυο", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.no_network), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -167,7 +167,7 @@ public class LoginActivity extends Activity {
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Παρακαλώ συνδεθείτε στο Διαδίκτυο", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.no_network), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -302,7 +302,7 @@ public class LoginActivity extends Activity {
                 startActivity(intent);
                 finish();
             } else {
-                Toast.makeText(LoginActivity.this, "Λάθος στοιχεία προσπαθήστε ξανά ή δημιουργήστε καινούριο λογαριασμό", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, getString(R.string.wrong_credentials), Toast.LENGTH_LONG).show();
             }
         }
     }

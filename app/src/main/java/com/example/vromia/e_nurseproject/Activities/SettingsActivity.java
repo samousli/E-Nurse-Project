@@ -111,7 +111,7 @@ public class SettingsActivity extends PreferenceActivity {
 
                     new SyncAppData().execute();
                 }else{
-                    Toast.makeText(SettingsActivity.this,"Παρακαλώ συνδεθείτε στο Διαδίκτυο",Toast.LENGTH_LONG).show();
+                    Toast.makeText(SettingsActivity.this,getString(R.string.no_network),Toast.LENGTH_LONG).show();
                 }
 
 
@@ -271,9 +271,9 @@ public class SettingsActivity extends PreferenceActivity {
             super.onPostExecute(s);
             db.close();
             if(success==1){
-                Toast.makeText(SettingsActivity.this,"Επιτυχής συγχρονισμός δεδομένων με την ιστοσελίδα",Toast.LENGTH_LONG).show();
+                Toast.makeText(SettingsActivity.this,getString(R.string.data_sync_success),Toast.LENGTH_LONG).show();
             }else{
-                Toast.makeText(SettingsActivity.this,"Τα δεδόμενα στην ιστοσελίδα είναι ήδη ενημερωμένα",Toast.LENGTH_LONG).show();
+                Toast.makeText(SettingsActivity.this,getString(R.string.already_synced),Toast.LENGTH_LONG).show();
             }
         }
     }
