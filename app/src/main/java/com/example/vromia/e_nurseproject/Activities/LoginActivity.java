@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -19,8 +20,13 @@ import android.widget.Toast;
 import com.example.vromia.e_nurseproject.Data.DoctorItem;
 import com.example.vromia.e_nurseproject.Data.HeathDatabase;
 import com.example.vromia.e_nurseproject.R;
-import com.example.vromia.e_nurseproject.Utils.JSONParser;
+import com.example.vromia.e_nurseproject.Utils.HttpHandler;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -31,21 +37,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
+
 public class LoginActivity extends Activity {
 
-
-    private EditText etUsername, etPassword;
-    private Button bConnect, bCreateUser;
-    private int userID;
-    private String userName, userSuname;
-    private int success, dsuccess;
-    private HeathDatabase hdb;
-
-    private JSONParser jsonParser;
-    private JSONArray jsonArray;
-
-    private static String url = "http://nikozisi.webpages.auth.gr/enurse/check_user.php";
-    private static String doctors_url = "http://nikozisi.webpages.auth.gr/enurse/get_doctors.php";
 
     private static final String TAG_CHECKSUCCESS = "success";
     private static final String TAG_USERID = "userid";
@@ -54,20 +49,32 @@ public class LoginActivity extends Activity {
     private static final String TAG_DOCTORID = "id";
     private static final String TAG_DOCTORNAME = "name";
     private static final String TAG_DOCTORSURNAME = "surname";
-
+    private static String url = "check_user.php";
+    private static String doctors_url = "http://nikozisi.webpages.auth.gr/enurse/get_doctors.php";
+    private EditText etUsername, etPassword;
+    private Button bConnect, bCreateUser;
+    private int userID;
+    private String userName, userSuname;
+    private int success, dsuccess;
+    private HeathDatabase hdb;
+    private JSONArray jsonArray;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
         initUI();
         initBasicVariables();
         initListeners();
-
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-
 
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
@@ -90,7 +97,6 @@ public class LoginActivity extends Activity {
 
     private void initBasicVariables() {
 
-        jsonParser = new JSONParser();
         jsonArray = null;
         userID = -1;
         success = -1;
@@ -98,44 +104,42 @@ public class LoginActivity extends Activity {
         hdb = new HeathDatabase(LoginActivity.this);
         userName = userSuname = "";
 
-
         if (haveNetworkConnection()) {
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    List<NameValuePair> params = new ArrayList<>();
-                    JSONObject jsonObject = jsonParser.makeHttpRequest(doctors_url, "GET", params);
+                    HttpHandler.get(doctors_url, new RequestParams(), new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            try {
+                                dsuccess = response.getInt(TAG_DOCTORSUCCESS);
 
-                    try {
-                        dsuccess = jsonObject.getInt(TAG_DOCTORSUCCESS);
+                                if (dsuccess == 1) {
 
-                        if (dsuccess == 1) {
+                                    jsonArray = response.getJSONArray(TAG_DOCTORS);
+                                    Log.i("Length", jsonArray.length() + "");
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject c = jsonArray.getJSONObject(i);
 
-                            jsonArray = jsonObject.getJSONArray(TAG_DOCTORS);
-                            Log.i("Length", jsonArray.length() + "");
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject c = jsonArray.getJSONObject(i);
+                                        int id = c.getInt(TAG_DOCTORID);
 
-                                int id = c.getInt(TAG_DOCTORID);
+                                        String name = c.getString(TAG_DOCTORNAME);
+                                        String surname = c.getString(TAG_DOCTORSURNAME);
+                                        Log.i("DoctorName", name);
 
-                                String name = c.getString(TAG_DOCTORNAME);
-                                String surname = c.getString(TAG_DOCTORSURNAME);
-                                Log.i("DoctorName", name);
+                                        DoctorItem doctor = new DoctorItem(id, name, surname);
+                                        hdb.InsertDoctor(doctor);
+                                    }
+                                    // hdb.showDoctors();
+                                    hdb.close();
+                                }
 
-                                DoctorItem doctor = new DoctorItem(id, name, surname);
-                                hdb.InsertDoctor(doctor);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                            // hdb.showDoctors();
-                            hdb.close();
-
                         }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-
+                    });
                 }
             }).start();
 
@@ -149,29 +153,29 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //execute the php script and see the result via json format
-                if(haveNetworkConnection()){
-                    new CheckUser().execute();
-                }else{
+                if (haveNetworkConnection()) {
+                    String username = etUsername.getText().toString().trim();
+                    String password = etPassword.getText().toString().trim();
+
+                    new CheckUser().execute(username, password);
+                } else {
                     Toast.makeText(LoginActivity.this, "Παρακαλώ συνδεθείτε στο Διαδίκτυο", Toast.LENGTH_LONG).show();
                 }
-
             }
         });
 
         bCreateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(haveNetworkConnection()) {
+                if (haveNetworkConnection()) {
                     Intent intent = new Intent(LoginActivity.this, UserDetailsActivity.class);
                     startActivity(intent);
                     finish();
-                }else {
+                } else {
                     Toast.makeText(LoginActivity.this, "Παρακαλώ συνδεθείτε στο Διαδίκτυο", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-
     }
 
 
@@ -201,51 +205,92 @@ public class LoginActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+
+        if (PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).getBoolean("key_animations", false))
+            overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Login Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.example.vromia.e_nurseproject.Activities/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Login Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.example.vromia.e_nurseproject.Activities/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 
     //AsyncTack < params,progress,result
     class CheckUser extends AsyncTask<String, String, String> {
-
-
         //Check user starting background thread
         @Override
         protected String doInBackground(String... args) {
-            String username = etUsername.getText().toString().trim();
-            String password = etPassword.getText().toString().trim();
 
-            Log.i("username", username);
-            Log.i("password", password);
+            RequestParams p = new RequestParams();
+            p.put("username", args[0]);
+            p.put("password", args[1]);
+            HttpHandler.post(url, p, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    try {
+                        success = response.getInt(TAG_CHECKSUCCESS);
 
-            //Building Parameters to pass to php script check_user
-            List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("username", username));
-            params.add(new BasicNameValuePair("password", password));
+                        if (success == 1) {
+                            userID = response.getInt(TAG_USERID);
+                            SharedPrefsManager manager = new SharedPrefsManager(LoginActivity.this);
+                            manager.startEditing();
+                            manager.setPrefsUserID(userID);
+                            manager.commit();
+                            Log.i("UserID", userID + "");
+                            userName = response.getString(TAG_DOCTORNAME);
+                            userSuname = response.getString(TAG_DOCTORSURNAME);
+                        } else {
+                            Log.i("UserSuccess", "Fail");
+                        }
 
-            //Getting JSON object passing  the url, the params, and the method that you want to pass the params
-            JSONObject json = jsonParser.makeHttpRequest(url, "POST", params);
-
-            try {
-                success = json.getInt(TAG_CHECKSUCCESS);
-
-                if (success == 1) {
-                    userID = json.getInt(TAG_USERID);
-                    SharedPrefsManager manager=new SharedPrefsManager(LoginActivity.this);
-                    manager.startEditing();
-                    manager.setPrefsUserID(userID);
-                    manager.commit();
-                    Log.i("UserID",userID+"");
-                    userName = json.getString(TAG_DOCTORNAME);
-                    userSuname = json.getString(TAG_DOCTORSURNAME);
-                } else {
-                    Log.i("UserSuccess", "Fail");
+                        Log.i("UserID", userID + "");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-
-                Log.i("UserID", userID + "");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            });
 
             return "";
         }
@@ -265,16 +310,6 @@ public class LoginActivity extends Activity {
                 Toast.makeText(LoginActivity.this, "Λάθος στοιχεία προσπαθήστε ξανά ή δημιουργήστε καινούριο λογαριασμό", Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
-
-        if (PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).getBoolean("key_animations", false))
-            overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
 
 }
