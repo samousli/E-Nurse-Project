@@ -26,6 +26,7 @@ public class SharedPrefsManager {
     private static final String PREFS_FYLO = "fylo";
     private static final String PREFS_START_OFF_APP="start of app";
     private static final String PREFS_USERID="userID";
+    private static final String PREFS_ROUTINE = "routineworkout";
 
     //the SharedPreferences and Editor objects
     SharedPreferences prefs;
@@ -146,4 +147,10 @@ public class SharedPrefsManager {
         editor.putString(PREFS_FYLO, fylo);
     }
 
+    public void setPrefsRoutine(long wo){
+        editor.putLong(PREFS_ROUTINE,wo); }
+
+    public Long getPrefsRoutine() {
+        return prefs.getLong(PREFS_ROUTINE, 0);
+    }
 }
