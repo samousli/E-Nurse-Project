@@ -1,4 +1,4 @@
-package com.example.vromia.e_nurseproject;
+package com.example.vromia.e_nurseproject.Activities;
 
 
 import android.app.Activity;
@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.vromia.e_nurseproject.Activities.HomeActivity;
-import com.example.vromia.e_nurseproject.Activities.LoginActivity;
-import com.example.vromia.e_nurseproject.Activities.UserDetailsActivity;
+import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
 
 
