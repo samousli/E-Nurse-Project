@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -22,12 +25,16 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.HttpHandler;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -36,6 +43,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -56,6 +64,8 @@ public class UserDetailsActivity extends Activity {
     private String Sfylo = "";
     private HealthDatabase hdb;
     private Spinner sDoctors;
+    private CheckBox ckRoutine;
+    private TimePicker tpRoutine;
 
     private ArrayList<String> diseases;
 
@@ -63,7 +73,7 @@ public class UserDetailsActivity extends Activity {
     private int cuSuccess = -1;
     private int sex = -1;
     private String userName, userSurname, history;
-    private int age, male, weight,height;
+    private int age, male, weight, height;
     private String menu;
 
     private static String user_details_url = "http://nikozisi.webpages.auth.gr/enurse/get_user_details.php";
@@ -81,6 +91,11 @@ public class UserDetailsActivity extends Activity {
     private ProgressDialog pDialog;
 
     private SharedPrefsManager manager;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +107,7 @@ public class UserDetailsActivity extends Activity {
 
         initUI();
         userID = getIntent().getIntExtra("userID", -1);
-        menu=getIntent().getStringExtra("Menu");
+        menu = getIntent().getStringExtra("Menu");
         if (userID != -1) {
             userName = getIntent().getStringExtra("userName");
             userSurname = getIntent().getStringExtra("userSurname");
@@ -108,13 +123,16 @@ public class UserDetailsActivity extends Activity {
         }
 
 
-        if(menu!=null){
+        if (menu != null) {
             fillUIWithValues();
         }
 
         setUpUI();
         initListeners();
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void initUI() {
@@ -144,6 +162,9 @@ public class UserDetailsActivity extends Activity {
 
         rb_male = (RadioButton) findViewById(R.id.rb_male);
         rb_female = (RadioButton) findViewById(R.id.rb_female);
+
+        ckRoutine = (CheckBox) findViewById(R.id.checkBoxRoutine);
+        tpRoutine = (TimePicker) findViewById(R.id.timePicker);
     }
 
 
@@ -167,6 +188,21 @@ public class UserDetailsActivity extends Activity {
             diseases.add(i);
         }
         addDiseases();
+
+        long r = manager.getPrefsRoutine();
+        if (r == 0) {
+            ckRoutine.setChecked(false);
+            tpRoutine.setVisibility(View.INVISIBLE);
+        } else {
+            ckRoutine.setChecked(true);
+            tpRoutine.setVisibility(View.VISIBLE);
+            Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(r);
+            tpRoutine.setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
+            tpRoutine.setCurrentMinute(c.get(Calendar.MINUTE));
+        }
+
+
     }
 
     private void setUpUI() {
@@ -178,7 +214,7 @@ public class UserDetailsActivity extends Activity {
         sDoctors.setAdapter(adapter);
 
 
-        if (userID != -1 ) {
+        if (userID != -1) {
             llAccount.setVisibility(View.GONE);
 
             onoma.setText(userName);
@@ -186,8 +222,6 @@ public class UserDetailsActivity extends Activity {
             new GetUser().execute();
 
         }
-
-
 
 
         btAdd.setOnClickListener(new View.OnClickListener() {
@@ -309,7 +343,7 @@ public class UserDetailsActivity extends Activity {
                 Sbaros = String.valueOf(baros.getText());
                 Ssurname = String.valueOf(etSurname.getText());
                 SistorikoPathiseon = "";
-                if(menu!=null && SistorikoPathiseon.length()>0){
+                if (menu != null && SistorikoPathiseon.length() > 0) {
                     for (int i = 0; i < diseases.size(); i++) {
                         if (!diseases.get(i).trim().equals("")) {
                             SistorikoPathiseon += diseases.get(i) + "-";
@@ -317,7 +351,7 @@ public class UserDetailsActivity extends Activity {
                     }
 
                     SistorikoPathiseon = SistorikoPathiseon.substring(0, SistorikoPathiseon.length() - 1);
-                 }
+                }
 
                 SharedPrefsManager spmanager = new SharedPrefsManager(UserDetailsActivity.this);
 
@@ -362,8 +396,25 @@ public class UserDetailsActivity extends Activity {
                 spmanager.setPrefsIstorikoPathiseon(SistorikoPathiseon);
                 spmanager.setPrefsFylo(Sfylo);
 
+                if(ckRoutine.isChecked()){
+                    final Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.HOUR_OF_DAY, tpRoutine.getCurrentHour());
+                    calendar.set(Calendar.MINUTE, tpRoutine.getCurrentMinute());
+                    calendar.set(Calendar.SECOND, 0);
+                    calendar.set(Calendar.MILLISECOND, 0);
+
+                    long millis = calendar.getTimeInMillis();
+
+
+                    spmanager.setPrefsRoutine(millis);
+                }else{
+
+                    spmanager.setPrefsRoutine(0);
+                }
+
 
                 spmanager.commit();
+
 
 
                 if (!spmanager.getPrefsStart()) {
@@ -380,6 +431,58 @@ public class UserDetailsActivity extends Activity {
 
             }
         });
+
+
+        ckRoutine.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    tpRoutine.setVisibility(View.VISIBLE);
+                }else{
+                    tpRoutine.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "UserDetails Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.example.vromia.e_nurseproject.Activities/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "UserDetails Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.example.vromia.e_nurseproject.Activities/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 
 
@@ -413,7 +516,7 @@ public class UserDetailsActivity extends Activity {
                             male = response.getInt(TAG_MALE);
                             history = response.getString(TAG_HISTORY);
                             weight = response.getInt(TAG_WEIGHT);
-                            height=response.getInt(TAG_HEIGHT);
+                            height = response.getInt(TAG_HEIGHT);
 
                             Log.i("values", age + " - " + male + " - " + history + " - " + weight);
 
@@ -443,12 +546,13 @@ public class UserDetailsActivity extends Activity {
 
 //            istorikoPathiseon.setText(history);
             baros.setText(weight + "");
-            ypsos.setText(height+"");
+            ypsos.setText(height + "");
 
         }
 
 
     }
+
     class createUser extends AsyncTask<String, String, String> {
 
         @Override

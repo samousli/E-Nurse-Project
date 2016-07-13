@@ -40,6 +40,7 @@
     <string name="getDrugDescription">Πάρτε το χάπι σας</string>
     <string name="time_to_workout">Είναι η ώρα της καθημερινής σας γυμναστικής</string>
     <string name="reminder">Υπενθύμηση!!!</string>
+    <string name="checkBox_routine_reminder">Υπενθύμηση Καθημερινής Άσκησης</string>
 
 
 </resources>
