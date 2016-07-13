@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:gravity="center"
-                    android:text="Στοιχεία λογαριασμού"
+                    android:text="@string/accountDetails"
                     android:textColor="#003399"
                     android:textSize="30sp"
                     android:textStyle="italic" />
@@ -51,7 +51,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:padding="10dp"
-                        android:text=" Όνομα λογαριασμού:"
+                        android:text="@string/nameAccount"
                         android:textColor="#de000000"
                         android:textSize="20sp" />
 
@@ -80,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:padding="10dp"
-                        android:text=" Κωδικός :"
+                        android:text="@string/pass"
                         android:textColor="#de000000"
                         android:textSize="20sp" />
 
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="Προσωπικά στοιχεία"
+                android:text="@string/personalDetails"
                 android:textColor="#003399"
                 android:textSize="30sp"
                 android:textStyle="italic" />
@@ -128,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:padding="10dp"
-                    android:text=" Όνομα :"
+                    android:text="@string/namAccount"
                     android:textColor="#de000000"
                     android:textSize="20sp" />
 
@@ -156,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:padding="10dp"
-                    android:text=" Επίθετο :"
+                    android:text="@string/surname"
                     android:textColor="#de000000"
                     android:textSize="20sp" />
 
@@ -184,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:padding="10dp"
-                    android:text=" Ηλικία :"
+                    android:text="@string/age"
                     android:textColor="#de000000"
                     android:textSize="20sp" />
 
@@ -213,7 +213,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:padding="10dp"
-                    android:text=" Φύλο :"
+                    android:text="@string/gender"
                     android:textColor="#de000000"
                     android:textSize="20sp" />
 
@@ -230,7 +230,7 @@
                         android:id="@+id/rb_male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="'Ανδρας"
+                        android:text="@string/male"
                         android:textColor="#de000000"
                         android:textSize="20sp" />
 
@@ -238,7 +238,7 @@
                         android:id="@+id/rb_female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Γυναίκα"
+                        android:text="@string/female"
                         android:textColor="#de000000"
                         android:textSize="20sp" />
 
@@ -252,7 +252,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
-                android:text="Σωματικά στοιχεία"
+                android:text="@string/body_info"
                 android:textColor="#003399"
                 android:textSize="30sp"
                 android:textStyle="italic" />
@@ -276,7 +276,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:padding="10dp"
-                    android:text=" Ύψος (cm) :"
+                    android:text="@string/height"
                     android:textColor="#de000000"
                     android:textSize="20sp" />
 
@@ -305,7 +305,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:padding="10dp"
-                    android:text=" Βάρος (kg) :"
+                    android:text="@string/weight"
                     android:textColor="#de000000"
                     android:textSize="20sp" />
 
@@ -334,7 +334,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="0.2"
                     android:gravity="center"
-                    android:text="Ιστορικό παθήσεων"
+                    android:text="@string/illness_history"
                     android:textColor="#003399"
                     android:textSize="30sp"
                     android:textStyle="italic" />
@@ -396,7 +396,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
-                android:text="Στοιχεία Γιατρού"
+                android:text="@string/doctors_info"
                 android:textColor="#003399"
                 android:textSize="30sp"
                 android:textStyle="italic" />
@@ -420,7 +420,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:padding="10dp"
-                    android:text=" Όνομα :"
+                    android:text="@string/name"
                     android:textColor="#de000000"
                     android:textSize="20sp" />
 
