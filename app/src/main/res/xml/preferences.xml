@@ -10,22 +10,25 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Δεδομενα">
+    <PreferenceCategory android:title="@string/data">
 
         <Preference
             android:key="key_delete_exc"
-            android:title="Διαγραφη δεδομενων Ασκησης" />
+            android:title="@string/key_delete_exc" />
 
         <Preference
             android:key="key_delete_food"
-            android:title="Διαγραφη δεδομενων Διατροφης" />
+            android:title="@string/key_delete_food" />
+            <!--android:title="Διαγραφη δεδομενων Διατροφης" />-->
 
         <Preference
             android:key="key_export"
-            android:title="Συγχρονισμός Δεδομένων" />
+            android:title="@string/key_export" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Σχετικα">
+    <PreferenceCategory
+        android:key="key_about_title"
+        android:title="Σχετικα">
 
         <Preference
             android:key="key_about"

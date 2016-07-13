@@ -64,5 +64,47 @@
     <string name="servings">Servings</string>
     <string name="minutes">Minutes</string>
     <string name="date_time_separator">at</string>
+    <string name="drug">Φάρμακο:</string>
+    <string name="quantity">Δοσολογία (σε ml)</string>
+    <string name="tvCause">Αιτία Συν/σης:</string>
+    <string name="tvPeriod">Περίοδος Κατανάλωσης</string>
+    <string name="Morning">Πρωί</string>
+    <string name="Night">Βράδυ</string>
+    <string name="DateTime">Ημερομηνία:</string>
+    <string name="login">Είσοδος</string>
+    <string name="name">Όνομα λογαριασμού:</string>
+    <string name="password">Κωδικός:</string>
+    <string name="createAccount">Δημιουργία Λογαριασμού</string>
+    <string name="loginAccount">Σύνδεση</string>
+    <string name="accountDetails">Στοιχεία λογαριασμού</string>
+    <string name="personalDetails">Προσωπικά στοιχεία</string>
+    <string name="namAccount">Όνομα :</string>
+    <string name="surname">Επίθετο :</string>
+    <string name="age">Ηλικία :</string>
+    <string name="nameAccount">Όνομα λογαριασμού:</string>
+    <string name="pass">Κωδικός :</string>
+    <string name="timeOfWorkout">Χρόνος Άθλησης (σε λεπτά)</string>
+    <string name="periodOfworkout">Περίοδος \'Αθλησης</string>
+    <string name="noon">Μεσημέρι</string>
+    <string name="morning2">Πρωί</string>
+    <string name="night2">Βράδυ</string>
+    <string name="datetime">Ημερομηνία:</string>
+    <string name="periodoFWORKOUT">Περίοδος Άθλησης</string>
+    <string name="category">Κατηγορία:</string>
+    <string name="key_animations">Special Effects</string>
+    <string name="key_delete_exc">Delete Exercise Data</string>
+    <string name="key_delete_food">Delete Diet Data</string>
+    <string name="key_export">Syncronize Data</string>
+    <string name="key_about">About Application</string>
+    <string name="key_rate">Rate this app</string>
+    <string name="key_about_title">About</string>
+    <string name="data">Data</string>
+    <string name="doctors_info">Στοιχεία Γιατρού</string>
+    <string name="illness_history">Ιστορικό παθήσεων</string>
+    <string name="weight">Βάρος (kg)</string>
+    <string name="height">Ύψος (cm)</string>
+    <string name="body_info">Σωματικά στοιχεία</string>
+    <string name="gender">Φύλο</string>
+
 
 </resources>

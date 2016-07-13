@@ -28,10 +28,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:padding="10dp"
-                    android:text="Κατηγορία:"
+                    android:text="@string/category"
                     android:textColor="#de000000"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp" />
 
 
                 <Spinner
@@ -68,7 +67,7 @@
                     android:layout_weight="0.6"
                     android:lines="2"
                     android:padding="10dp"
-                    android:text="Χρόνος Άθλησης (σε λεπτά)"
+                    android:text="@string/timeOfWorkout"
                     android:textColor="#de000000"
                     android:textSize="20sp"
                     android:textStyle="italic" />
@@ -103,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="Περίοδος 'Αθλησης"
+                android:text="@string/periodoFWORKOUT"
                 android:textColor="#de000000"
                 android:textSize="20sp"
                 android:textStyle="italic" />
@@ -130,16 +129,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
-                        android:text="Πρωί"
+                        android:text="@string/morning2"
                         android:textColor="#de000000"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:checked="false" />
 
                     <RadioButton
                         android:id="@+id/rbNoon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
-                        android:text="Μεσημέρι"
+                        android:text="@string/noon"
                         android:textColor="#de000000"
                         android:textSize="20sp" />
 
@@ -148,9 +148,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
-                        android:text="Βράδυ"
+                        android:text="@string/night2"
                         android:textColor="#de000000"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:checked="false" />
                 </RadioGroup>
 
             </LinearLayout>
@@ -176,7 +177,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.3"
                     android:padding="10dp"
-                    android:text="Ημερομηνία:"
+                    android:text="@string/datetime"
                     android:textColor="#de000000"
                     android:textSize="20sp"
                     android:textStyle="italic" />
