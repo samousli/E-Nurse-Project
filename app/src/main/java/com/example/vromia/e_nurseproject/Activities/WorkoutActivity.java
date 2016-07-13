@@ -1,7 +1,6 @@
 package com.example.vromia.e_nurseproject.Activities;
 
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -48,7 +47,6 @@ public class WorkoutActivity extends FragmentActivity {
         initUI();
         initListeners();
         bMorn.setActivated(true);
-
         String categories[] = getResources().getStringArray(R.array.workoutNames);
         ArrayList<String> finalCategories = new ArrayList<>();
         for (int i = 0; i < categories.length; i++) {
@@ -84,7 +82,6 @@ public class WorkoutActivity extends FragmentActivity {
         bDate = (ImageButton) findViewById(R.id.imbtDate);
         quantField = (EditText) findViewById(R.id.etDuration);
         spinner = (Spinner) findViewById(R.id.spChooseEx);
-        bBack = (Button) findViewById(R.id.btBack);
         bOk = (Button) findViewById(R.id.btOk);
 
 
@@ -97,21 +94,21 @@ public class WorkoutActivity extends FragmentActivity {
         bMorn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tod = "Πρωί";
+                tod = getString(R.string.morning);
             }
         });
 
         bNoon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tod = "Μεσημέρι";
+                tod = getString(R.string.midday);
             }
         });
 
         bNight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tod = "Βράδυ";
+                tod = getString(R.string.evening);
             }
         });
 
@@ -122,12 +119,6 @@ public class WorkoutActivity extends FragmentActivity {
             }
         });
 
-        bBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         bOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,14 +128,16 @@ public class WorkoutActivity extends FragmentActivity {
                 try {
                     quantity = Double.valueOf(quantField.getText().toString());
                 } catch (NumberFormatException e) {
-                    Toast.makeText(WorkoutActivity.this, "Plz insert a numeric value", Toast.LENGTH_LONG);
+                    Toast.makeText(WorkoutActivity.this, getString(R.string.invalidEntry_Numeric),
+                            Toast.LENGTH_LONG);
                 }
                 HealthDatabase db = new HealthDatabase(WorkoutActivity.this);//instance of current database
                 WorkoutItem item = new WorkoutItem(exName, date, quantity, tod);
                 Log.i("msg", exName + " " + date + " " + quantity + " " + tod);
                 db.InsertWorkout(item);
                 db.close();
-                Toast.makeText(WorkoutActivity.this, "Εισαγωγή επιτυχής", Toast.LENGTH_LONG).show();
+                Toast.makeText(WorkoutActivity.this, getString(R.string.successfulEntry),
+                        Toast.LENGTH_LONG).show();
                 finish();
 
             }
@@ -170,13 +163,6 @@ public class WorkoutActivity extends FragmentActivity {
         }
     };
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
 
-        if (PreferenceManager.getDefaultSharedPreferences(WorkoutActivity.this).getBoolean("key_animations", false))
-            overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
-    }
 
 }

@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">E-Nurse Project</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">E-Nurse</string>
     <string name="action_settings">Settings</string>
 
     <string-array name="foodNames">
-        <item>Κοτόπουλο</item>
-        <item>Χοιρινό</item>
-        <item>Όσπρια</item>
-        <item>Ζυμαρικά</item>
+        <item>Red meat</item>
+        <item>Poultry</item>
+        <item>Legumes</item>
+        <item>Pasta</item>
     </string-array>
 
     <string-array name="workoutNames">
-        <item>Τρέξιμο</item>
-        <item>Γυμναστήριο</item>
-        <item>Άθλημα</item>
-        <item>Sex</item>
+        <item>Running</item>
+        <item>Gym</item>
+        <item>Sports</item>
     </string-array>
 
     <string-array name="drugNames">
@@ -27,20 +25,44 @@
     </string-array>
 
     <string-array name="actions">
-        <item>Ιστορικό</item>
-        <item>Στοιχεία</item>
+        <item>History</item>
+        <item>Data</item>
         <item>E-Nurse</item>
-        <item>Εξαγωγή</item>
-        <item>Έξοδος</item>
+        <item>Export</item>
+        <item>Exit</item>
     </string-array>
 
     <string name="close_drawer">Closed</string>
     <string name="open_drawer">Opened</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="getDrugDescription">Πάρτε το χάπι σας</string>
-    <string name="time_to_workout">Είναι η ώρα της καθημερινής σας γυμναστικής</string>
-    <string name="reminder">Υπενθύμηση!!!</string>
-    <string name="checkBox_routine_reminder">Υπενθύμηση Καθημερινής Άσκησης</string>
-
+    <string name="time_to_workout">Time to workout</string>
+    <string name="reminder">Reminder</string>
+    <string name="invalidEntry_Numeric">Please insert a correct number</string>
+    <string name="successfulEntry">Entry successful</string>
+    <string name="morning">Morning</string>
+    <string name="midday">Midday</string>
+    <string name="evening">Evening</string>
+    <string name="categories">Categories</string>
+    <string name="time_period">Time of day</string>
+    <string name="diet">Diet</string>
+    <string name="workout">Workout</string>
+    <string name="drugs">Drugs</string>
+    <string name="profile">Profile</string>
+    <string name="history">History</string>
+    <string name="drug_history">Drug history</string>
+    <string name="settings">Settings</string>
+    <string name="exit">Exit</string>
+    <string name="dataUpdated">Data update successful</string>
+    <string name="no_network">No networking enabled</string>
+    <string name="wrong_credentials">Incorrect username/password</string>
+    <string name="data_sync_success">Data successfully synced</string>
+    <string name="already_synced">Data was already synced</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="error_insertUsernamePassword">Please insert a valid username/password</string>
+    <string name="servings">Servings</string>
+    <string name="minutes">Minutes</string>
+    <string name="date_time_separator">at</string>
 
 </resources>

@@ -120,7 +120,8 @@ public class DrugsHistoryActivity extends FragmentActivity {
             case R.id.filtersDrugsDate:
                 Calendar calendar = Calendar.getInstance();
                 CalendarDatePickerDialog dateDialog = CalendarDatePickerDialog.newInstance(dateListener,
-                        calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                        calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH));
                 dateDialog.show(manager, "Tag");
                 break;
 
@@ -159,7 +160,8 @@ public class DrugsHistoryActivity extends FragmentActivity {
         super.onBackPressed();
         this.finish();
 
-        if (PreferenceManager.getDefaultSharedPreferences(DrugsHistoryActivity.this).getBoolean("key_animations", false))
+        if (PreferenceManager.getDefaultSharedPreferences(DrugsHistoryActivity.this)
+                .getBoolean("key_animations", false))
             overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
 }

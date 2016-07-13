@@ -30,7 +30,6 @@ public class DietActivity extends FragmentActivity {
 
     private ImageButton bHour;
     private ImageButton bDate;
-    private Button bBack;
     private Button bOk;
     private EditText quantField;
     private Spinner spinner;
@@ -52,7 +51,8 @@ public class DietActivity extends FragmentActivity {
         for (int i = 0; i < categories.length; i++) {
             finalCategories.add(categories[i]);
         }
-        ArrayAdapter adapter = new ArrayAdapter(DietActivity.this, R.layout.spinner_item, R.id.tvSpinnerCategories, finalCategories);
+        ArrayAdapter adapter = new ArrayAdapter(DietActivity.this, R.layout.spinner_item,
+                                    R.id.tvSpinnerCategories, finalCategories);
         spinner.setAdapter(adapter);
 
         Calendar c = Calendar.getInstance();
@@ -95,7 +95,6 @@ public class DietActivity extends FragmentActivity {
     public void initUI() {
         bHour = (ImageButton) findViewById(R.id.imbtHour);
         bDate = (ImageButton) findViewById(R.id.imbtDate);
-        bBack = (Button) findViewById(R.id.btBack);
         bOk = (Button) findViewById(R.id.btOk);
         quantField = (EditText) findViewById(R.id.etQuant);
         spinner = (Spinner) findViewById(R.id.spChooseFood);
@@ -119,12 +118,6 @@ public class DietActivity extends FragmentActivity {
                 cdate.show(getSupportFragmentManager(), "Calendar Dialog");
             }
         });
-        bBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         bOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +125,8 @@ public class DietActivity extends FragmentActivity {
                 try {
                     quantity = Double.valueOf(quantField.getText().toString());
                 } catch (NumberFormatException e) {
-                    Toast.makeText(DietActivity.this, "Plz insert a numeric value", Toast.LENGTH_LONG);
+                    Toast.makeText(DietActivity.this,
+                            getString(R.string.invalidEntry_Numeric), Toast.LENGTH_LONG);
 
                 }
                 String foodName = spinner.getSelectedItem().toString();
@@ -142,7 +136,9 @@ public class DietActivity extends FragmentActivity {
                 DietItem item = new DietItem(foodName, date, quantity, hour);
                 db.InsertDiet(item);
                 db.close();
-                Toast.makeText(DietActivity.this, "Εισαγωγή επιτυχής", Toast.LENGTH_LONG).show();
+
+                Toast.makeText(DietActivity.this,
+                        getString(R.string.successfulEntry), Toast.LENGTH_LONG).show();
                 finish();
 
             }
