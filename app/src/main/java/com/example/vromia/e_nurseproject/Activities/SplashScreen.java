@@ -3,7 +3,6 @@ package com.example.vromia.e_nurseproject.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.example.vromia.e_nurseproject.R;
 
 /**
