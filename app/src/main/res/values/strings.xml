@@ -35,7 +35,7 @@
     <string name="close_drawer">Closed</string>
     <string name="open_drawer">Opened</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="getDrugDescription">Πάρτε το χάπι σας</string>
+    <string name="getDrugDescription">Time to take your drugs</string>
     <string name="time_to_workout">Time to workout</string>
     <string name="reminder">Reminder</string>
     <string name="invalidEntry_Numeric">Please insert a correct number</string>

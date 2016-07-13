@@ -1,8 +1,10 @@
-package com.example.vromia.e_nurseproject;
+package com.example.vromia.e_nurseproject.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.example.vromia.e_nurseproject.R;
 
 /**
  * Created by eva on 13/07/16.
@@ -22,7 +24,7 @@ public class SplashScreen extends Activity{
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
-                    Intent intent = new Intent(SplashScreen.this,MainActivity.class);
+                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                     startActivity(intent);
                 }
             }
