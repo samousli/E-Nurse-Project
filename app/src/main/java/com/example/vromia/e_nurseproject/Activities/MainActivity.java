@@ -2,6 +2,8 @@ package com.example.vromia.e_nurseproject.Activities;
 
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,9 +11,13 @@ import android.view.MenuItem;
 
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
+import com.example.vromia.e_nurseproject.Utils.StartServiceReceiver;
+
+import java.util.Calendar;
 
 
 public class MainActivity extends Activity {
+    private static final long REPEAT_TIME = 1000 * 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +29,17 @@ public class MainActivity extends Activity {
 
         boolean pass=sharedPrefsManager.getPrefsStart();
 
+
+        AlarmManager service = (AlarmManager) this
+                .getSystemService(this.ALARM_SERVICE);
+        Intent i = new Intent(this, StartServiceReceiver.class);
+        PendingIntent pending = PendingIntent.getBroadcast(this, 0, i,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.SECOND, 10);
+        service.setRepeating(AlarmManager.RTC_WAKEUP,
+                cal.getTimeInMillis(), REPEAT_TIME, pending);
+
         if(pass){
 
             startActivity(new Intent(MainActivity.this, HomeActivity.class));
@@ -33,6 +50,7 @@ public class MainActivity extends Activity {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             this.finish();
         }
+
 
 
 
