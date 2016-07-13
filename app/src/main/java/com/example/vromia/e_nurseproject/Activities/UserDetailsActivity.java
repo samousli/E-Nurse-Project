@@ -325,6 +325,8 @@ public class UserDetailsActivity extends Activity {
 
                 Sonoma = String.valueOf(onoma.getText());
                 Silikia = String.valueOf(ilikia.getText());
+                if (Silikia.equals("") )
+                    Silikia = "0";
                 Sypsos = String.valueOf(ypsos.getText());
                 Sbaros = String.valueOf(baros.getText());
                 Ssurname = String.valueOf(etSurname.getText());
@@ -550,8 +552,8 @@ public class UserDetailsActivity extends Activity {
                 String username, String password, String name, String surname???,
                 int age, int male,  #!! 1 for male, 0 for female
                 float weight, float height
-            }
-            */
+            }*/
+
             String doctor_full_name = sDoctors.getSelectedItem().toString();
             String tokens[] = doctor_full_name.split(" ");
             RequestParams p = new RequestParams();
