@@ -36,7 +36,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.apache.http.NameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -546,7 +545,6 @@ public class UserDetailsActivity extends Activity {
 
         @Override
         protected String doInBackground(String... args) {
-            List<NameValuePair> params = new ArrayList<>();
             /* Request param format:
             {
                 String username, String password, String name, String surname???,

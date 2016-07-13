@@ -7,7 +7,7 @@ android {
     // Since the old apache.client package has been deprecated
     // It's required to enable it's use explicitly
     // https://developer.android.com/about/versions/marshmallow/android-6.0-changes.html#boringSSL
-    useLibrary 'org.apache.http.legacy'
+    //useLibrary 'org.apache.http.legacy'
 
 
     defaultConfig {
