@@ -447,7 +447,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/checkBoxRoutine"
-                    android:text="@string/checkBox_routine_reminder"/>
+                    android:text="@string/ck_btn_string"
+                    />
 
                 <TimePicker
                     android:layout_width="wrap_content"
