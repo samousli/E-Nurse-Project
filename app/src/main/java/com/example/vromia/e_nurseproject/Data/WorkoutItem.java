@@ -35,5 +35,4 @@ public class WorkoutItem {
         return workTime;
     }
 
-
 }

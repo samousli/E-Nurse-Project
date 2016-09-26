@@ -34,7 +34,6 @@
         </activity>
         <activity android:name=".Activities.DietActivity" />
         <activity android:name=".Activities.HistoryActivity" />
-        <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.UserDetailsActivity" />
         <activity android:name=".Activities.WorkoutActivity" />
         <activity android:name=".Activities.SettingsActivity" />

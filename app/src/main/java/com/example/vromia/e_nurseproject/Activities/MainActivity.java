@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
 
 
         AlarmManager service = (AlarmManager) this
-                .getSystemService(this.ALARM_SERVICE);
+                .getSystemService(ALARM_SERVICE);
         Intent i = new Intent(this, StartServiceReceiver.class);
         PendingIntent pending = PendingIntent.getBroadcast(this, 0, i,
                 PendingIntent.FLAG_CANCEL_CURRENT);
@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
         service.setRepeating(AlarmManager.RTC_WAKEUP,
                 cal.getTimeInMillis(), REPEAT_TIME, pending);
 
+
         if(pass){
 
             startActivity(new Intent(MainActivity.this, HomeActivity.class));
@@ -47,12 +48,17 @@ public class MainActivity extends Activity {
 
         }else{
 
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            this.finish();
+            //startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            //this.finish();
         }
 
 
-
+        //TODO after login execute this
+//        Intent intent = new Intent(MainActivity.this, UserDetailsActivity.class);
+//        intent.putExtra("userID", userID);
+//        intent.putExtra("userName", userName);
+//        intent.putExtra("userSurname", userSuname);
+//        startActivity(intent);
 
     }
 

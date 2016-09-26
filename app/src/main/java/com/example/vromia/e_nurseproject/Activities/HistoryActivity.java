@@ -11,7 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.HistoryAdapter;
@@ -24,17 +24,37 @@ import java.util.Calendar;
  */
 public class HistoryActivity extends FragmentActivity {
 
+    FragmentManager manager;
     private ListView lv;
     private HealthDatabase db;
     private Cursor cursor;
     private HistoryAdapter adapter;
-
     private AlertDialog dialog = null;
-
     private Menu menu;
     private boolean isDiet = true;
-
-    FragmentManager manager;
+    private CalendarDatePickerDialogFragment.OnDateSetListener listener = new CalendarDatePickerDialogFragment.OnDateSetListener() {
+        @Override
+        public void onDateSet(CalendarDatePickerDialogFragment calendarDatePickerDialog, int i, int i2, int i3) {
+            String month, day;
+            i2++;
+            if (i2 < 10)
+                month = "0" + i2;
+            else
+                month = String.valueOf(i2);
+            if (i3 < 10)
+                day = "0" + i3;
+            else
+                day = String.valueOf(i3);
+            String date = i + "-" + month + "-" + day;
+            if (isDiet) {
+                cursor = db.getDietByDate(date);
+                refreshList(cursor);
+            } else {
+                cursor = db.getWorkoutByDate(date);
+                refreshList(cursor);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +75,6 @@ public class HistoryActivity extends FragmentActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -73,6 +92,8 @@ public class HistoryActivity extends FragmentActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final String[] categories;
+        Calendar c;
+        CalendarDatePickerDialogFragment cdate;
 
         switch (id) {
             case R.id.toggle:
@@ -114,10 +135,14 @@ public class HistoryActivity extends FragmentActivity {
                 refreshList(cursor);
                 break;
             case R.id.filtersDietDate:
-                Calendar calendar = Calendar.getInstance();
-                CalendarDatePickerDialog dateDialog = CalendarDatePickerDialog.newInstance(dateListener,
-                        calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-                dateDialog.show(manager, "Tag");
+                c = Calendar.getInstance();
+                cdate = new CalendarDatePickerDialogFragment()
+                        .setOnDateSetListener(listener)
+                        .setFirstDayOfWeek(Calendar.SUNDAY)
+                        .setPreselectedDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
+                        .setDoneText("Yes")
+                        .setCancelText("No");
+                cdate.show(manager, "Tag");
                 break;
             case R.id.filtersWorkoutCategory:
                 categories = getResources().getStringArray(R.array.workoutNames);
@@ -138,10 +163,14 @@ public class HistoryActivity extends FragmentActivity {
                 dialog.show();
                 break;
             case R.id.filtersWorkoutDate:
-                calendar = Calendar.getInstance();
-                dateDialog = CalendarDatePickerDialog.newInstance(dateListener,
-                        calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-                dateDialog.show(manager, "Tag");
+                c = Calendar.getInstance();
+                cdate = new CalendarDatePickerDialogFragment()
+                        .setOnDateSetListener(listener)
+                        .setFirstDayOfWeek(Calendar.SUNDAY)
+                        .setPreselectedDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
+                        .setDoneText("Yes")
+                        .setCancelText("No");
+                cdate.show(manager, "Tag");
                 break;
             case R.id.filtersWorkoutPeriod:
                 final String periods[] = new String[]{
@@ -174,30 +203,6 @@ public class HistoryActivity extends FragmentActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    private CalendarDatePickerDialog.OnDateSetListener dateListener = new CalendarDatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
-            String month, day;
-            i2++;
-            if (i2 < 10)
-                month = "0" + i2;
-            else
-                month = String.valueOf(i2);
-            if (i3 < 10)
-                day = "0" + i3;
-            else
-                day = String.valueOf(i3);
-            String date = i + "-" + month + "-" + day;
-            if (isDiet) {
-                cursor = db.getDietByDate(date);
-                refreshList(cursor);
-            } else {
-                cursor = db.getWorkoutByDate(date);
-                refreshList(cursor);
-            }
-        }
-    };
 
     public void refreshList(Cursor cursor) {
         adapter.changeCursor(cursor);

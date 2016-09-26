@@ -14,7 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.example.vromia.e_nurseproject.Data.DrugsItem;
 import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
@@ -27,6 +27,11 @@ import java.util.Calendar;
  * Created by Vromia on 17/12/2014.
  */
 public class DrugsActivity extends FragmentActivity {
+    private static final String FRAG_TAG_DATE_PICKER = "date_picker";
+    AutoCompleteTextView textView;
+    String[] name = {
+            "Πονοκέφαλος", "Ημικρανία", "Πονόλαιμος", "Πόνοι Περιόδου",
+            "Πίεση", "Κάψιμο", "Πυρετός", "Ναυτία"};
     private RadioButton bMorn;
     private RadioButton bNoon;
     private RadioButton bNight;
@@ -35,15 +40,27 @@ public class DrugsActivity extends FragmentActivity {
     private Button bBack;
     private Button bOk;
     private EditText quantField,etCause;
-    AutoCompleteTextView textView;
     private Spinner spinner;
-    private CalendarDatePickerDialog cdate;//gui for showing date
+    private CalendarDatePickerDialogFragment cdate;//gui for showing date
     private String date, tod;
-
-
-    String[] name = {
-            "Πονοκέφαλος", "Ημικρανία", "Πονόλαιμος", "Πόνοι Περιόδου",
-            "Πίεση", "Κάψιμο", "Πυρετός", "Ναυτία"};
+    private CalendarDatePickerDialogFragment.OnDateSetListener listener = new CalendarDatePickerDialogFragment.OnDateSetListener() {
+        @Override
+        public void onDateSet(CalendarDatePickerDialogFragment calendarDatePickerDialog, int i, int i2, int i3) {
+            String month, day;
+            i2++;
+            if (i2 < 10) {
+                month = "0" + i2;
+            } else {
+                month = String.valueOf(i2);
+            }
+            if (i3 < 10) {
+                day = "0" + i3;
+            } else {
+                day = String.valueOf(i3);
+            }
+            date = i + "-" + month + "-" + day;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +83,13 @@ public class DrugsActivity extends FragmentActivity {
 
 
         Calendar c = Calendar.getInstance();
-        cdate = CalendarDatePickerDialog.newInstance(listener,
-                c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        cdate = new CalendarDatePickerDialogFragment()
+                .setOnDateSetListener(listener)
+                .setFirstDayOfWeek(Calendar.SUNDAY)
+                .setPreselectedDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
+                .setDoneText("Yes")
+                .setCancelText("No");
+
 
         //Initialize variable date to current date
         String day = c.get(Calendar.DAY_OF_MONTH) + "";
@@ -105,7 +127,6 @@ public class DrugsActivity extends FragmentActivity {
         bDate.setImageResource(R.drawable.calendar);
 
     }
-
 
     public void initListeners() {
         bMorn.setOnClickListener(new View.OnClickListener() {
@@ -161,26 +182,6 @@ public class DrugsActivity extends FragmentActivity {
             }
         });
     }
-
-    private CalendarDatePickerDialog.OnDateSetListener listener = new CalendarDatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
-            String month, day;
-            i2++;
-            if (i2 < 10) {
-                month = "0" + i2;
-            } else {
-                month = String.valueOf(i2);
-            }
-            if (i3 < 10) {
-                day = "0" + i3;
-            } else {
-                day = String.valueOf(i3);
-            }
-            date = i + "-" + month + "-" + day;
-        }
-    };
-
 
     @Override
     public void onBackPressed() {

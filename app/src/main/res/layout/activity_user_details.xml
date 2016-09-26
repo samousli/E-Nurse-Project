@@ -1,9 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_background"
-    tools:context=".Activities.UserDetailsActivity">
+    android:background="@drawable/app_background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,9 +10,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingBottom="60dp"
-            android:weightSum="1"
-            android:orientation="vertical">
+            android:weightSum="1">
 
             <LinearLayout
                 android:id="@+id/llAccount"
@@ -439,21 +437,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_gravity="center"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <CheckBox
+                    android:id="@+id/checkBoxRoutine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/checkBoxRoutine"
-                    android:text="@string/ck_btn_string"
+                    android:text="@string/checkBox_routine_reminder"
                     />
 
                 <TimePicker
+                    android:id="@+id/timePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:id="@+id/timePicker"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="0.83"
                     android:visibility="gone"/>
