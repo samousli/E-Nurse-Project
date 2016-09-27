@@ -106,7 +106,7 @@
     <string name="height">Ύψος (cm)</string>
     <string name="body_info">Σωματικά στοιχεία</string>
     <string name="gender">Φύλο</string>
-    <string name="checkBox_routine_reminder" >Υπενθύμιση Άσκησης</string>
+    <string name="ck_btn_string" >Υπενθύμιση Άσκησης</string>
 
 
 </resources>
