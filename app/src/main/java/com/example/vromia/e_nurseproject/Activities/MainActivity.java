@@ -12,8 +12,12 @@ import android.view.MenuItem;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
 import com.example.vromia.e_nurseproject.Utils.StartServiceReceiver;
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Calendar;
+
+import static com.firebase.ui.auth.ui.AcquireEmailHelper.RC_SIGN_IN;
 
 
 public class MainActivity extends Activity {
@@ -41,24 +45,22 @@ public class MainActivity extends Activity {
                 cal.getTimeInMillis(), REPEAT_TIME, pending);
 
 
-        if(pass){
-
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
             startActivity(new Intent(MainActivity.this, HomeActivity.class));
             this.finish();
-
-        }else{
-
-            //startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            //this.finish();
+        } else {
+            startActivityForResult(
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setProviders(
+                                    AuthUI.EMAIL_PROVIDER,
+                                    AuthUI.FACEBOOK_PROVIDER)
+                            .build(),
+                    RC_SIGN_IN);
         }
 
 
-        //TODO after login execute this
-//        Intent intent = new Intent(MainActivity.this, UserDetailsActivity.class);
-//        intent.putExtra("userID", userID);
-//        intent.putExtra("userName", userName);
-//        intent.putExtra("userSurname", userSuname);
-//        startActivity(intent);
 
     }
 
@@ -83,5 +85,19 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
+                // user is signed in!
+                startActivity(new Intent(this, HomeActivity.class));
+                finish();
+            } else {
+                // user is not signed in. Maybe just wait for the user to press
+                // "sign in" again, or show a message
+            }
+        }
     }
 }
