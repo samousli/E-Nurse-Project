@@ -11,7 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.DrugsHistoryAdapter;
@@ -25,20 +25,33 @@ import java.util.Calendar;
  */
 public class DrugsHistoryActivity extends FragmentActivity {
 
+    FragmentManager manager;
     private ListView lv;
     private HealthDatabase db;
     private Cursor cursor;
     private DrugsHistoryAdapter adapter;
     private MyDrugsAdapter myDrugs_adapter;
-
     private AlertDialog dialog = null;
-
     private Menu menu;
     private boolean isMyDrugs = true;
-
-    FragmentManager manager;
-
-
+    private CalendarDatePickerDialogFragment.OnDateSetListener listener = new CalendarDatePickerDialogFragment.OnDateSetListener() {
+        @Override
+        public void onDateSet(CalendarDatePickerDialogFragment calendarDatePickerDialog, int i, int i2, int i3) {
+            String month, day;
+            i2++;
+            if (i2 < 10)
+                month = "0" + i2;
+            else
+                month = String.valueOf(i2);
+            if (i3 < 10)
+                day = "0" + i3;
+            else
+                day = String.valueOf(i3);
+            String date = i + "-" + month + "-" + day;
+            cursor = db.getDrugsByDate(date);
+            refreshList(cursor);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +71,6 @@ public class DrugsHistoryActivity extends FragmentActivity {
         manager = getSupportFragmentManager();
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,36 +130,20 @@ public class DrugsHistoryActivity extends FragmentActivity {
                 refreshList(cursor);
                 break;
             case R.id.filtersDrugsDate:
-                Calendar calendar = Calendar.getInstance();
-                CalendarDatePickerDialog dateDialog = CalendarDatePickerDialog.newInstance(dateListener,
-                        calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH));
-                dateDialog.show(manager, "Tag");
+                Calendar c = Calendar.getInstance();
+                CalendarDatePickerDialogFragment cdate = new CalendarDatePickerDialogFragment()
+                        .setOnDateSetListener(listener)
+                        .setFirstDayOfWeek(Calendar.SUNDAY)
+                        .setPreselectedDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
+                        .setDoneText("Yes")
+                        .setCancelText("No");
+                cdate.show(manager, "Tag");
                 break;
 
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-    private CalendarDatePickerDialog.OnDateSetListener dateListener = new CalendarDatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
-            String month, day;
-            i2++;
-            if (i2 < 10)
-                month = "0" + i2;
-            else
-                month = String.valueOf(i2);
-            if (i3 < 10)
-                day = "0" + i3;
-            else
-                day = String.valueOf(i3);
-            String date = i + "-" + month + "-" + day;
-            cursor = db.getDrugsByDate(date);
-            refreshList(cursor);
-        }
-    };
 
     public void refreshList(Cursor cursor) {
         adapter.changeCursor(cursor);

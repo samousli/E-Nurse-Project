@@ -12,9 +12,8 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
-import com.doomonafireball.betterpickers.radialtimepicker.RadialPickerLayout;
-import com.doomonafireball.betterpickers.radialtimepicker.RadialTimePickerDialog;
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
+import com.codetroopers.betterpickers.radialtimepicker.RadialTimePickerDialogFragment;
 import com.example.vromia.e_nurseproject.Data.DietItem;
 import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
@@ -33,9 +32,41 @@ public class DietActivity extends FragmentActivity {
     private Button bOk;
     private EditText quantField;
     private Spinner spinner;
-    private CalendarDatePickerDialog cdate;//gui for showing date
-    private RadialTimePickerDialog timeDialog;//gui for showing date
+    private CalendarDatePickerDialogFragment cdate;//gui for showing date
+    private RadialTimePickerDialogFragment timeDialog;//gui for showing date
     private String date, hour;
+    private CalendarDatePickerDialogFragment.OnDateSetListener listener = new CalendarDatePickerDialogFragment.OnDateSetListener() {
+        @Override
+        public void onDateSet(CalendarDatePickerDialogFragment calendarDatePickerDialog, int i, int i2, int i3) {
+            String month, day;
+            i2++;
+            if (i2 < 10)
+                month = "0" + i2;
+            else
+                month = String.valueOf(i2);
+            if (i3 < 10)
+                day = "0" + i3;
+            else
+                day = String.valueOf(i3);
+            date = i + "-" + month + "-" + day;
+        }
+    };
+    private RadialTimePickerDialogFragment.OnTimeSetListener timelistener = new RadialTimePickerDialogFragment.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(RadialTimePickerDialogFragment radialPickerLayout, int i, int i2) {
+            String hours, mins;
+            if (i < 10)
+                hours = "0" + i;
+            else
+                hours = String.valueOf(i);
+            if (i2 < 10)
+                mins = "0" + i2;
+            else
+                mins = String.valueOf(i2);
+            hour = hours + ":" + mins;
+            Log.i("msg", hour);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +87,12 @@ public class DietActivity extends FragmentActivity {
         spinner.setAdapter(adapter);
 
         Calendar c = Calendar.getInstance();
-        cdate = CalendarDatePickerDialog.newInstance(listener,
-                c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        cdate = new CalendarDatePickerDialogFragment()
+                .setOnDateSetListener(listener)
+                .setFirstDayOfWeek(Calendar.SUNDAY)
+                .setPreselectedDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
+                .setDoneText("Yes")
+                .setCancelText("No");
 
         //Initialize variable date to current date
         String day = c.get(Calendar.DAY_OF_MONTH) + "";
@@ -71,8 +106,11 @@ public class DietActivity extends FragmentActivity {
 
         date = c.get(Calendar.YEAR) + "-" + month + "-" + day;
 
-        timeDialog = RadialTimePickerDialog.newInstance(timelistener, c.getTime().getHours(), c.getTime().getMinutes(), true);
-
+        timeDialog = new RadialTimePickerDialogFragment()
+                .setOnTimeSetListener(timelistener)
+                .setStartTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE))
+                .setDoneText("Yes")
+                .setCancelText("No");
         // Initialize variable hour to current hour
         int temp_hour = c.get(Calendar.HOUR_OF_DAY);
         int temp_min = c.get(Calendar.MINUTE);
@@ -144,42 +182,6 @@ public class DietActivity extends FragmentActivity {
             }
         });
     }
-
-
-    private CalendarDatePickerDialog.OnDateSetListener listener = new CalendarDatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
-            String month, day;
-            i2++;
-            if (i2 < 10)
-                month = "0" + i2;
-            else
-                month = String.valueOf(i2);
-            if (i3 < 10)
-                day = "0" + i3;
-            else
-                day = String.valueOf(i3);
-            date = i + "-" + month + "-" + day;
-        }
-    };
-
-    private RadialTimePickerDialog.OnTimeSetListener timelistener = new RadialTimePickerDialog.OnTimeSetListener() {
-        @Override
-        public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2) {
-            String hours, mins;
-            if (i < 10)
-                hours = "0" + i;
-            else
-                hours = String.valueOf(i);
-            if (i2 < 10)
-                mins = "0" + i2;
-            else
-                mins = String.valueOf(i2);
-            hour = hours + ":" + mins;
-            Log.i("msg", hour);
-        }
-    };
-
 
     @Override
     public void onBackPressed() {

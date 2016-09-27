@@ -13,7 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.doomonafireball.betterpickers.calendardatepicker.CalendarDatePickerDialog;
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.Data.WorkoutItem;
 import com.example.vromia.e_nurseproject.R;
@@ -36,8 +36,26 @@ public class WorkoutActivity extends FragmentActivity {
     private EditText quantField;
     private Spinner spinner;
     private ImageButton dateBut;
-    private CalendarDatePickerDialog cdate;//gui for showing date
+    private CalendarDatePickerDialogFragment cdate;//gui for showing date
     private String date, tod;
+    private CalendarDatePickerDialogFragment.OnDateSetListener listener = new CalendarDatePickerDialogFragment.OnDateSetListener() {
+        @Override
+        public void onDateSet(CalendarDatePickerDialogFragment calendarDatePickerDialog, int i, int i2, int i3) {
+            String month, day;
+            i2++;
+            if (i2 < 10) {
+                month = "0" + i2;
+            } else {
+                month = String.valueOf(i2);
+            }
+            if (i3 < 10) {
+                day = "0" + i3;
+            } else {
+                day = String.valueOf(i3);
+            }
+            date = i + "-" + month + "-" + day;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +74,12 @@ public class WorkoutActivity extends FragmentActivity {
         spinner.setAdapter(adapter);
 
         Calendar c = Calendar.getInstance();
-        cdate = CalendarDatePickerDialog.newInstance(listener,
-                c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        cdate = new CalendarDatePickerDialogFragment()
+                .setOnDateSetListener(listener)
+                .setFirstDayOfWeek(Calendar.SUNDAY)
+                .setPreselectedDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
+                .setDoneText("Yes")
+                .setCancelText("No");
 
         //Initialize variable date to current date
         String day = c.get(Calendar.DAY_OF_MONTH) + "";
@@ -88,7 +110,6 @@ public class WorkoutActivity extends FragmentActivity {
         bDate.setImageResource(R.drawable.calendar);
 
     }
-
 
     public void initListeners() {
         bMorn.setOnClickListener(new View.OnClickListener() {
@@ -143,25 +164,6 @@ public class WorkoutActivity extends FragmentActivity {
             }
         });
     }
-
-    private CalendarDatePickerDialog.OnDateSetListener listener = new CalendarDatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(CalendarDatePickerDialog calendarDatePickerDialog, int i, int i2, int i3) {
-            String month, day;
-            i2++;
-            if (i2 < 10) {
-                month = "0" + i2;
-            } else {
-                month = String.valueOf(i2);
-            }
-            if (i3 < 10) {
-                day = "0" + i3;
-            } else {
-                day = String.valueOf(i3);
-            }
-            date = i + "-" + month + "-" + day;
-        }
-    };
 
 
 
