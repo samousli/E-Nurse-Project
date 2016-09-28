@@ -10,6 +10,8 @@ public class DietItem {
     private double amount;
     private String time;
 
+    public DietItem() {
+    }
 
     public DietItem(String category,String date,double amount,String time){
         this.category=category;

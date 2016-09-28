@@ -27,15 +27,5 @@ public class NotificationReceiver extends BroadcastReceiver {
         service.setRepeating(AlarmManager.RTC_WAKEUP,
                 cal.getTimeInMillis(), REPEAT_TIME, pending);
 
-
-/*
-        AlarmManager alarmManager = (AlarmManager)context.
-                getSystemService(Context.ALARM_SERVICE);
-        PendingIntent task = PendingIntent.getService(context, 0,
-                new Intent(context, NotificationManagerService.class) ,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,
-                System.currentTimeMillis(), AlarmManager.INTERVAL_HOUR, task);
-                */
     }
 }

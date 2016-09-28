@@ -12,8 +12,16 @@ import android.view.MenuItem;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
 import com.example.vromia.e_nurseproject.Utils.StartServiceReceiver;
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
+
+import static com.firebase.ui.auth.ui.AcquireEmailHelper.RC_SIGN_IN;
 
 
 public class MainActivity extends Activity {
@@ -41,24 +49,22 @@ public class MainActivity extends Activity {
                 cal.getTimeInMillis(), REPEAT_TIME, pending);
 
 
-        if(pass){
-
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
             startActivity(new Intent(MainActivity.this, HomeActivity.class));
             this.finish();
-
-        }else{
-
-            //startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            //this.finish();
+        } else {
+            startActivityForResult(
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setProviders(
+                                    AuthUI.EMAIL_PROVIDER,
+                                    AuthUI.FACEBOOK_PROVIDER)
+                            .build(),
+                    RC_SIGN_IN);
         }
 
 
-        //TODO after login execute this
-//        Intent intent = new Intent(MainActivity.this, UserDetailsActivity.class);
-//        intent.putExtra("userID", userID);
-//        intent.putExtra("userName", userName);
-//        intent.putExtra("userSurname", userSuname);
-//        startActivity(intent);
 
     }
 
@@ -83,5 +89,47 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
+
+                //Comment the following if any crush happens
+                //from here
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                FirebaseDatabase.getInstance().getReference().child("users").child(uid).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                            finish();
+                        } else {
+                            startActivity(new Intent(MainActivity.this, UserDetailsActivity.class));
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                //to here
+                //comment out the following
+
+                //startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                //finish();
+
+
+
+
+            } else {
+                // user is not signed in. Maybe just wait for the user to press
+                // "sign in" again, or show a message
+            }
+        }
     }
 }

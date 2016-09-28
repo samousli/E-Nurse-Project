@@ -1,13 +1,11 @@
 package com.example.vromia.e_nurseproject.Activities;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -22,16 +20,21 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -39,17 +42,8 @@ import java.util.Calendar;
  */
 public class UserDetailsActivity extends Activity {
 
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_AGE = "age";
-    private static final String TAG_HISTORY = "history";
-    private static final String TAG_MALE = "male";
-    private static final String TAG_WEIGHT = "weight";
-    private static final String TAG_CUSUCCESS = "success";
-    private static final String TAG_ID = "userID";
-    private static final String TAG_HEIGHT = "height";
-    private static String user_details_url = "http://nikozisi.webpages.auth.gr/enurse/get_user_details.php";
-    private static String create_user_url = "http://nikozisi.webpages.auth.gr/enurse/create_user.php";
-    private EditText onoma, ilikia, ypsos, baros, istorikoPathiseon, email, etSurname, etUsername, etPassword;
+
+    private EditText onoma, ilikia, ypsos, baros, istorikoPathiseon, etSurname;
     private LinearLayout llAccount, llDiseases;
     private ListView listview;
     private RadioGroup fylo;
@@ -62,20 +56,13 @@ public class UserDetailsActivity extends Activity {
     private CheckBox ckRoutine;
     private TimePicker tpRoutine;
     private ArrayList<String> diseases;
-    private int userID = -1;
-    private int cuSuccess = -1;
     private int sex = -1;
     private String userName, userSurname, history;
-    private int age, male, weight, height;
-    private String menu;
-    private ProgressDialog pDialog;
-
+    private int age;
+    private float weight;
+    private float height;
     private SharedPrefsManager manager;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,39 +73,17 @@ public class UserDetailsActivity extends Activity {
         diseases = new ArrayList<>();
 
         initUI();
-        userID = getIntent().getIntExtra("userID", -1);
-        menu = getIntent().getStringExtra("Menu");
-        if (userID != -1) {
-            userName = getIntent().getStringExtra("userName");
-            userSurname = getIntent().getStringExtra("userSurname");
-            manager.startEditing();
-            manager.setPrefsUserID(userID);
-            manager.commit();
-            //Log.i("Surname",userSurname);
-        } else {
-            if (manager.getPrefsUserID() != -1) {
-                userName = manager.getPrefsUsername();
-                userSurname = manager.getPrefsSurname();
-            }
-        }
 
+        getUser();
 
-        if (menu != null) {
-            fillUIWithValues();
-        }
 
         setUpUI();
         initListeners();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        //client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void initUI() {
         llAccount = (LinearLayout) findViewById(R.id.llAccount);
-        etUsername = (EditText) findViewById(R.id.etUsername);
-        etPassword = (EditText) findViewById(R.id.etPassword);
 
         llDiseases = (LinearLayout) findViewById(R.id.llDiseases);
 
@@ -176,8 +141,6 @@ public class UserDetailsActivity extends Activity {
             tpRoutine.setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
             tpRoutine.setCurrentMinute(c.get(Calendar.MINUTE));
         }
-
-
     }
 
     private void setUpUI() {
@@ -189,14 +152,8 @@ public class UserDetailsActivity extends Activity {
         sDoctors.setAdapter(adapter);
 
 
-        if (userID != -1) {
+        if (true) {
             llAccount.setVisibility(View.GONE);
-
-            onoma.setText(userName);
-            etSurname.setText(userSurname);
-            //TODO firebase impl
-            // new GetUser().execute();
-
         }
 
 
@@ -298,11 +255,10 @@ public class UserDetailsActivity extends Activity {
         });
 
 
-
         btOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String Sonoma, Silikia, Sypsos, Sbaros, SistorikoPathiseon, SUsername, SPassword, Ssurname;
+                String Sonoma, Silikia, Sypsos, Sbaros, SistorikoPathiseon, Ssurname;
                 boolean flag = true;
 
                 Sonoma = String.valueOf(onoma.getText());
@@ -311,7 +267,7 @@ public class UserDetailsActivity extends Activity {
                 Sbaros = String.valueOf(baros.getText());
                 Ssurname = String.valueOf(etSurname.getText());
                 SistorikoPathiseon = "";
-                if (menu != null && SistorikoPathiseon.length() > 0) {
+                if (SistorikoPathiseon.length() > 0) {
                     for (int i = 0; i < diseases.size(); i++) {
                         if (!diseases.get(i).trim().equals("")) {
                             SistorikoPathiseon += diseases.get(i) + "-";
@@ -323,51 +279,26 @@ public class UserDetailsActivity extends Activity {
 
                 SharedPrefsManager spmanager = new SharedPrefsManager(UserDetailsActivity.this);
 
-                Log.i("nikos", "userid = " + userID + "   prefs=" + manager.getPrefsUserID());
-                if (userID == -1 && manager.getPrefsUserID() == -1) {
-                    SUsername = String.valueOf(etUsername.getText());
-                    SPassword = String.valueOf(etPassword.getText());
 
-                    if (SUsername.equals("")) {
-                        //"Παρακαλώ γράψτε τα πεδία Όνομα Λογαριασμού - Κωδικός"
-                        Toast.makeText(UserDetailsActivity.this,
-                                getString(R.string.error_insertUsernamePassword), Toast.LENGTH_LONG).show();
-                        flag = false;
-                    } else {
-                        flag = true;
-                        spmanager.startEditing();
-                        spmanager.setPrefsUsername(SUsername);
-                        spmanager.setPrefsPassword(SPassword);
-                        spmanager.commit();
+                flag = true;
+                String name = onoma.getText().toString();
+                String surname = etSurname.getText().toString();
+                String age = ilikia.getText().toString();
+                String weight = baros.getText().toString();
+                String height = ypsos.getText().toString();
+                createUser(name, surname, age, weight, height);
 
-                        // Get all data from the UI and pass to the async runner, so the call to the
-                        // server can be made.
-                        String username = etUsername.getText().toString();
-                        String password = etPassword.getText().toString();
-                        String name = onoma.getText().toString();
-                        String surname = etSurname.getText().toString();
-                        String age = ilikia.getText().toString();
-                        String weight = baros.getText().toString();
-                        String height = ypsos.getText().toString();
-                        //TODO firebase impl
-//                        new createUser().execute(username, password, name,
-//                                surname, age, Integer.toString(sex), weight, height);
-
-                    }
-                }
 
                 spmanager.startEditing();
-
                 spmanager.setPrefsOnoma(Sonoma);
                 spmanager.setPrefsSurname(Ssurname);
                 spmanager.setPrefsIlikia(Integer.parseInt(Silikia));
-//                spmanager.setPrefsYpsos(Float.parseFloat(Sypsos));
                 spmanager.setPrefsBaros(Float.parseFloat(Sbaros));
                 spmanager.setPrefsYpsos(Float.parseFloat(Sypsos));
                 spmanager.setPrefsIstorikoPathiseon(SistorikoPathiseon);
                 spmanager.setPrefsFylo(Sfylo);
 
-                if(ckRoutine.isChecked()){
+                if (ckRoutine.isChecked()) {
                     final Calendar calendar = Calendar.getInstance();
                     calendar.set(Calendar.HOUR_OF_DAY, tpRoutine.getCurrentHour());
                     calendar.set(Calendar.MINUTE, tpRoutine.getCurrentMinute());
@@ -378,14 +309,13 @@ public class UserDetailsActivity extends Activity {
 
 
                     spmanager.setPrefsRoutine(millis);
-                }else{
+                } else {
 
                     spmanager.setPrefsRoutine(0);
                 }
 
 
                 spmanager.commit();
-
 
 
                 if (!spmanager.getPrefsStart()) {
@@ -407,13 +337,67 @@ public class UserDetailsActivity extends Activity {
         ckRoutine.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
+                if (b) {
                     tpRoutine.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     tpRoutine.setVisibility(View.INVISIBLE);
                 }
             }
         });
     }
 
+    private void createUser(String name, String surname, String age, String weight, String height) {
+        String doctor_full_name = sDoctors.getSelectedItem().toString();
+        String tokens[] = doctor_full_name.split(" ");
+        Map<String, Object> values = new HashMap<>();
+        values.put("DOCTOR_NAME", tokens[0]);
+        values.put("DOCTOR_SNAME", tokens[1]);
+        values.put("USERNAME", name);
+        values.put("USERSURNAME", surname);
+        values.put("AGE", age);
+        values.put("WEIGHT", weight);
+        values.put("HEIGHT", height);
+
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
+        mRef.child("users").child(uid).updateChildren(values);
+    }
+
+
+    public void getUser() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
+        mRef.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, String> value = dataSnapshot.getValue(Map.class);
+                    userName = value.get("USERNAME");
+                    userSurname = value.get("USERSURNAME");
+                    age = Integer.parseInt(value.get("AGE"));
+                    Sfylo = value.get("SEX");
+                    weight = Float.parseFloat(value.get("WEIGHT"));
+                    height = Float.parseFloat(value.get("HEIGHT"));
+
+                    manager.startEditing();
+                    manager.setPrefsOnoma(userName);
+                    manager.setPrefsSurname(userSurname);
+                    manager.setPrefsIlikia(age);
+                    manager.setPrefsBaros(weight);
+                    manager.setPrefsYpsos(height);
+                    //manager.setPrefsIstorikoPathiseon(SistorikoPathiseon);
+                    manager.setPrefsFylo(Sfylo);
+
+                    fillUIWithValues();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
 }

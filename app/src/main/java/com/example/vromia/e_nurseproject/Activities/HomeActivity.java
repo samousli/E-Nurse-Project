@@ -1,16 +1,15 @@
 package com.example.vromia.e_nurseproject.Activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.vromia.e_nurseproject.Data.DietItem;
 import com.example.vromia.e_nurseproject.Data.GridItem;
@@ -18,9 +17,14 @@ import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.Data.WorkoutItem;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.GridAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-
 
 
 /**
@@ -35,6 +39,7 @@ public class HomeActivity extends Activity {
     private static final String TAG_WORKOUT = "exercise";
     private static final String TAG_TYPE = "type";
     private static final String TAG_DURATION = "duration";
+    private static final String TAG = "HOME ACTIVITY";
     private GridView gridView;
     private ArrayList<GridItem> items;
     private HealthDatabase db;
@@ -42,24 +47,18 @@ public class HomeActivity extends Activity {
     private ArrayList<WorkoutItem> workoutItems;
     private boolean updateDiet = false, updateWorkout = false;
 
+    private DatabaseReference mDatabase;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-//        if (haveNetworkConnection()) {
-//
-//            httpHandler = new HttpHandler();
-//            dietItems = new ArrayList<>();
-//            workoutItems = new ArrayList<>();
-//            db = new HealthDatabase(HomeActivity.this);
-//
-//            new SyncWebData().execute();
-//
-//
-//        }
-        //// TODO: 27/9/2016  synchronize with firebase
+        updateDietDatabase();
+        updateWorkoutDatabase();
 
 
         gridView = (GridView) findViewById(R.id.gridview);
@@ -128,117 +127,105 @@ public class HomeActivity extends Activity {
     }
 
 
-    private boolean haveNetworkConnection() {
-        boolean haveConnectedWifi = false;
-        boolean haveConnectedMobile = false;
+    public void updateDietDatabase() {
 
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-        for (NetworkInfo ni : netInfo) {
-            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-                if (ni.isConnected())
-                    haveConnectedWifi = true;
-            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (ni.isConnected())
-                    haveConnectedMobile = true;
-        }
-        return haveConnectedWifi || haveConnectedMobile;
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
 
+                // A new comment has been added, add it to the displayed list
+                DietItem item = dataSnapshot.getValue(DietItem.class);
+                if (!db.dietTupleExists(item.getCategory(), item.getTime())) {
+                    db.InsertDiet(item);
+                }
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
+
+                // A comment has changed, use the key to determine if we are displaying this
+                // comment and if so displayed the changed comment.
+                DietItem newComment = dataSnapshot.getValue(DietItem.class);
+                String commentKey = dataSnapshot.getKey();
+                //TODO update item
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
+
+                String commentKey = dataSnapshot.getKey();
+                //TODO remove item from database
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
+                //DO NOTHING
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
+                Toast.makeText(HomeActivity.this, "Failed to load dietItems.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mDatabase.child("user-diet").addChildEventListener(childEventListener);
     }
 
+    public void updateWorkoutDatabase() {
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
 
-//    class SyncWebData extends AsyncTask<String, String, String> {
-//
-//        @Override
-//        protected String doInBackground(String... args) {
-//            SharedPrefsManager manager = new SharedPrefsManager(HomeActivity.this);
-//            int userID = manager.getPrefsUserID();
-//
-//            RequestParams params = new RequestParams("userID", userID);
-//
-//            HttpHandler.post(url, params, new JsonHttpResponseHandler() {
-//                @Override
-//                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//                    // If the response is JSONObject instead of expected JSONArray
-//                    try {
-//                        JSONArray dietArray = response.getJSONArray(TAG_DIET);
-//                        JSONArray workoutArray = response.getJSONArray(TAG_WORKOUT);
-//
-//                        Cursor dietCursor = db.getAllDietItems();
-//                        Cursor workoutCursor = db.getAllWorkoutItems();
-//                        if (dietCursor.getCount() != dietArray.length()) {
-//
-//                            updateDiet = true;
-//                            for (int i = 0; i < dietArray.length(); i++) {
-//                                JSONObject c = dietArray.getJSONObject(i);
-//                                String meal = c.getString(TAG_MEAL);
-//                                String date = c.getString(TAG_DATE);
-//                                String mealTime = c.getString(TAG_MEALTIME);
-//
-//                                String dateTokens[] = date.split(" ");
-//                                String mealTimeTokens[] = mealTime.split(":");
-//
-//                                DietItem dietItem = new DietItem(meal, dateTokens[0], 1,
-//                                        mealTimeTokens[0] + ":" + mealTimeTokens[1]);
-//                                dietItems.add(dietItem);
-//                            }
-//                        }
-//
-//                        if (workoutCursor.getCount() != workoutArray.length()) {
-//                            updateWorkout = true;
-//                            for (int i = 0; i < workoutArray.length(); i++) {
-//                                JSONObject c = workoutArray.getJSONObject(i);
-//
-//                                double duration = c.getDouble(TAG_DURATION);
-//                                String date = c.getString(TAG_DATE);
-//                                String type = c.getString(TAG_TYPE);
-//
-//                                String dateTokens[] = date.split(" ");
-//                                WorkoutItem item = new WorkoutItem(type, dateTokens[0],
-//                                        duration, dateTokens[1]);
-//                                workoutItems.add(item);
-//                            }
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
-//
-//            return "";
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            super.onPostExecute(s);
-//            boolean update = false;
-//            if (updateDiet) {
-//                for (int i = 0; i < dietItems.size(); i++) {
-//                    DietItem item = dietItems.get(i);
-//                    if (!db.dietTupleExists(item.getCategory(), item.getTime())) {
-//                        db.InsertDiet(item);
-//                        update = true;
-//                    }
-//                }
-//            }
-//
-//            if (updateWorkout) {
-//                for (int i = 0; i < workoutItems.size(); i++) {
-//                    WorkoutItem workoutItem = workoutItems.get(i);
-//                    if (!db.workoutTupleExists(workoutItem.getCategory(), workoutItem.getWorkTime(), workoutItem.getDate())) {
-//                        db.InsertWorkout(workoutItem);
-//                        update = true;
-//                    }
-//                }
-//            }
-//
-//            if (update) {
-//                Toast.makeText(HomeActivity.this, getString(R.string.dataUpdated), Toast.LENGTH_LONG).show();
-//            }
-//
-//            db.close();
-//        }
-//    }
+                // A new comment has been added, add it to the displayed list
+                WorkoutItem item = dataSnapshot.getValue(WorkoutItem.class);
+                if (!db.workoutTupleExists(item.getCategory(), item.getWorkTime(), item.getDate())) {
+                    db.InsertWorkout(item);
+                }
 
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
+
+                // A comment has changed, use the key to determine if we are displaying this
+                // comment and if so displayed the changed comment.
+                WorkoutItem newComment = dataSnapshot.getValue(WorkoutItem.class);
+                String commentKey = dataSnapshot.getKey();
+                //TODO update item
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
+
+                String commentKey = dataSnapshot.getKey();
+                //TODO remove item from database
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
+                //DO NOTHING
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
+                Toast.makeText(HomeActivity.this, "Failed to load WorkoutItems.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mDatabase.child("user-workout").child(userId).addChildEventListener(childEventListener);
+    }
 
 }
