@@ -95,6 +95,9 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
+
+                //Comment the following if any crush happens
+                //from here
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                 FirebaseDatabase.getInstance().getReference().child("users").child(uid).addValueEventListener(new ValueEventListener() {
@@ -114,6 +117,12 @@ public class MainActivity extends Activity {
 
                     }
                 });
+                //to here
+                //comment out the following
+
+                //startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                //finish();
+
 
 
 
