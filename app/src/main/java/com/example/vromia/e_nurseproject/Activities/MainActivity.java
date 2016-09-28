@@ -14,6 +14,10 @@ import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
 import com.example.vromia.e_nurseproject.Utils.StartServiceReceiver;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -91,9 +95,28 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
-                // user is signed in!
-                startActivity(new Intent(this, HomeActivity.class));
-                finish();
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                FirebaseDatabase.getInstance().getReference().child("users").child(uid).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                            finish();
+                        } else {
+                            startActivity(new Intent(MainActivity.this, UserDetailsActivity.class));
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
             } else {
                 // user is not signed in. Maybe just wait for the user to press
                 // "sign in" again, or show a message

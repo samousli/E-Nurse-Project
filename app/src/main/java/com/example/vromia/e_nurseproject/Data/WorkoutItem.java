@@ -10,6 +10,9 @@ public class WorkoutItem {
     private String periodOfDay;
     private double workTime;
 
+    public WorkoutItem() {
+    }
+
     public WorkoutItem(String category, String date, double workTime, String periodOfDay) {
 
         this.category = category;

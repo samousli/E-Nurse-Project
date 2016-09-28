@@ -50,6 +50,9 @@ public class NotificationManagerService extends Service {
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(at);
             c.add(Calendar.HOUR, 24);
+            shpf.startEditing();
+            shpf.setPrefsRoutine(c.getTimeInMillis());
+            shpf.commit();
         }
 
         /// mRepository.close();

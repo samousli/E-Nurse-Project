@@ -17,6 +17,8 @@ import com.codetroopers.betterpickers.radialtimepicker.RadialTimePickerDialogFra
 import com.example.vromia.e_nurseproject.Data.DietItem;
 import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -115,7 +117,7 @@ public class DietActivity extends FragmentActivity {
         int temp_hour = c.get(Calendar.HOUR_OF_DAY);
         int temp_min = c.get(Calendar.MINUTE);
         String temp_hour_fixed, temp_min_fixed;
-        // TODO This block actually does nothing atm...?
+        // old comment mTODO This block actually does nothing atm...?
         if (temp_hour < 10) {
             temp_hour_fixed = "0" + String.valueOf(temp_hour);
         } else {
@@ -174,6 +176,8 @@ public class DietActivity extends FragmentActivity {
                 DietItem item = new DietItem(foodName, date, quantity, hour);
                 db.InsertDiet(item);
                 db.close();
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                FirebaseDatabase.getInstance().getReference().child("user-diet").child(uid).push().setValue(item);
 
                 Toast.makeText(DietActivity.this,
                         getString(R.string.successfulEntry), Toast.LENGTH_LONG).show();
