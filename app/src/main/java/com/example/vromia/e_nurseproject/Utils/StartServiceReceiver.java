@@ -14,7 +14,7 @@ public class StartServiceReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         Intent service = new Intent(context, NotificationManagerService.class);
-        Log.d(TAG, "Starting notification manager service...");
+        Log.d(TAG, "Starting notification manager service.");
         context.startService(service);
     }
 }

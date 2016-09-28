@@ -277,7 +277,6 @@ public class UserDetailsActivity extends Activity {
 
                 @Override
                 public void onClick(View v) {
-                    // TODO Auto-generated method stub
                     //Toast.makeText(UserDetailsActivity.this, "Clicked item;" + fName,
                     //        Toast.LENGTH_SHORT).show();
                 }
@@ -288,7 +287,6 @@ public class UserDetailsActivity extends Activity {
     private void initListeners() {
         fylo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // TODO Auto-generated method stub
                 if (rb_male.isChecked()) {
                     Sfylo = getString(R.string.male);
                     sex = 1;
@@ -417,150 +415,5 @@ public class UserDetailsActivity extends Activity {
             }
         });
     }
-    /*
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "UserDetails Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.example.vromia.e_nurseproject.Activities/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }*/
-    /*
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "UserDetails Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.example.vromia.e_nurseproject.Activities/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }*/
-
-//TODO get user firebase
-//    //AsyncTack < params,progress,result
-//    class GetUser extends AsyncTask<String, String, String> {
-//
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            pDialog = new ProgressDialog(UserDetailsActivity.this);
-//            pDialog.setMessage("Αντιστοίχηση Στοιχείων. Παρακαλώ Περιμένετε");
-//            pDialog.setIndeterminate(false);
-//            pDialog.setCancelable(true);
-//            pDialog.show();
-//        }
-//
-//        //Check user starting background thread
-//        @Override
-//        protected String doInBackground(String... args) {
-//            RequestParams p = new RequestParams("patientID", userID);
-//            HttpHandler.post(user_details_url, p, new JsonHttpResponseHandler() {
-//                @Override
-//                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//                    try {
-//                        int success = response.getInt(TAG_SUCCESS);
-//
-//                        if (success == 1) {
-//                            Log.i("Success", "success");
-//                            age = response.getInt(TAG_AGE);
-//                            male = response.getInt(TAG_MALE);
-//                            history = response.getString(TAG_HISTORY);
-//                            weight = response.getInt(TAG_WEIGHT);
-//                            height = response.getInt(TAG_HEIGHT);
-//
-//                            Log.i("values", age + " - " + male + " - " + history + " - " + weight);
-//
-//                        } else {
-//                            Log.i("UserSuccess", "Fail");
-//                        }
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
-//
-//            return "";
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String o) {
-//            super.onPostExecute(o);
-//            pDialog.dismiss();
-//            ilikia.setText(age + "");
-//            if (male == 1) {
-//                rb_male.setChecked(true);
-//            } else {
-//                rb_female.setChecked(true);
-//            }
-//
-////            istorikoPathiseon.setText(history);
-//            baros.setText(weight + "");
-//            ypsos.setText(height + "");
-//
-//        }
-//
-//
-//    }
-//
-//    class createUser extends AsyncTask<String, String, String> {
-//
-//        @Override
-//        protected String doInBackground(String... args) {
-//            /* Request param format:
-//            {
-//                String username, String password, String name, String surname???,
-//                int age, int male,  #!! 1 for male, 0 for female
-//                float weight, float height
-//            }
-//            */
-//            String doctor_full_name = sDoctors.getSelectedItem().toString();
-//            String tokens[] = doctor_full_name.split(" ");
-//            RequestParams p = new RequestParams();
-//            p.put("doctor_name", tokens[0]);
-//            p.put("doctor_surname", tokens[1]);
-//
-//            HttpHandler.post(create_user_url, p, new JsonHttpResponseHandler() {
-//                @Override
-//                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//                    try {
-//                        cuSuccess = response.getInt(TAG_SUCCESS);
-//                        int userID = response.getInt(TAG_ID);
-//                        SharedPrefsManager manager = new SharedPrefsManager(UserDetailsActivity.this);
-//                        manager.startEditing();
-//                        manager.setPrefsUserID(userID);
-//                        manager.commit();
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
-//            return "";
-//        }
-//    }
 
 }
