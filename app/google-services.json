@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "848433435399",
+    "firebase_url": "https://e-nurse-project-2777d.firebaseio.com",
+    "project_id": "e-nurse-project-2777d",
+    "storage_bucket": "e-nurse-project-2777d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848433435399:android:47965f6cfc6da7a4",
+        "android_client_info": {
+          "package_name": "com.example.vromia.e_nurseproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "848433435399-u10u0j7k22ggoovmjveufqqavhve723n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vromia.e_nurseproject",
+            "certificate_hash": "5627E96B7F447C09E9141CF84E7082530BC1FC4F"
+          }
+        },
+        {
+          "client_id": "848433435399-2i8qufh8hsaeacumr9p118nivbgfi3qt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC07ZN97zJVF0KnaWuVQc959gbJ1YuGjSo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "848433435399-2i8qufh8hsaeacumr9p118nivbgfi3qt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

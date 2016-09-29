@@ -17,11 +17,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.android.support:support-v4:23.+'
+    compile 'com.android.support:appcompat-v7:23.+'
     compile 'com.code-troopers.betterpickers:library:3.0.1'
     compile 'me.grantland:autofittextview:0.2.+'
 
@@ -32,4 +39,11 @@ dependencies {
     compile 'com.firebaseui:firebase-ui-auth:0.6.0'
     // FirebaseUI Storage only
     compile 'com.firebaseui:firebase-ui-storage:0.6.0'
+
+    compile 'com.google.firebase:firebase-core:9.6.0'
+    // Firebase Client
+    compile 'com.firebase:firebase-client-android:2.5.2'
 }
+
+// apply Google Services Gradle Plugin
+apply plugin: 'com.google.gms.google-services'
