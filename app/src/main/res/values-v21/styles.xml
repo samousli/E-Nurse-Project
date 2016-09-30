@@ -2,12 +2,12 @@
 <resources>
 
     <!--<style name="AppTheme" parent="Theme.AppCompat.NoActionBar">-->
-        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;\-->
-        <!--<item name="android:windowBackground">@drawable/app_background</item>-->
-        <!--<item name="colorAccent">@color/background_color</item>-->
-        <!--<item name="colorPrimary">@color/SkyBlue</item>-->
-        <!--<item name="android:colorForeground">@color/Honeydew</item>-->
-        <!--<item name="colorPrimaryDark">@color/Bisque</item>-->
-        <!--<item name="android:colorBackground">@color/Honeydew</item>-->
+    <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;\-->
+    <!--<item name="android:windowBackground">@drawable/app_background</item>-->
+    <!--<item name="colorAccent">@color/background_color</item>-->
+    <!--<item name="colorPrimary">@color/SkyBlue</item>-->
+    <!--<item name="android:colorForeground">@color/Honeydew</item>-->
+    <!--<item name="colorPrimaryDark">@color/Bisque</item>-->
+    <!--<item name="android:colorBackground">@color/Honeydew</item>-->
     <!--</style>-->
 </resources>

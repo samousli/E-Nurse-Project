@@ -208,7 +208,6 @@ public class HealthDatabase extends SQLiteOpenHelper {
     }
 
 
-
     public ArrayList<String> getDoctorsFullName() {
         ArrayList<String> full_names = new ArrayList<>();
         Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_DOCTORS, null);

@@ -16,10 +16,10 @@
 
     <ImageButton
         android:id="@+id/ibDelete"
+        style="@style/ImageButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="5"
-        style="@style/ImageButtonStyle"
         android:src="@drawable/ic_delete" />
 
 </LinearLayout>

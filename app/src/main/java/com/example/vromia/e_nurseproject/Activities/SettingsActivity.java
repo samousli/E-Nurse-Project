@@ -141,7 +141,6 @@ public class SettingsActivity extends PreferenceActivity {
                 return false;
             }
         });
-    }
 
 
         screen = findPreference("key_log_out");

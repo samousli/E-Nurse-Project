@@ -22,18 +22,18 @@
 
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/tvCat"
+                    style="@style/InfoTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:padding="16dp"
-                    style="@style/InfoTextStyle"
-                    android:text="Κατηγορία:"/>
+                    android:text="Κατηγορία:" />
 
                 <Spinner
                     android:id="@+id/spChooseFood"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"/>
+                    android:layout_weight="0.4" />
 
             </LinearLayout>
 
@@ -53,23 +53,23 @@
 
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/tvQuantity"
+                    style="@style/InfoTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:lines="2"
                     android:padding="16dp"
-                    android:text="Ποσότητα: (Μερίδα)"
-                    style="@style/InfoTextStyle"/>
+                    android:text="Ποσότητα: (Μερίδα)" />
 
                 <EditText
                     android:id="@+id/etQuant"
+                    style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
                     android:inputType="number"
-                    android:textAlignment="center"
-                    style="@style/EditTextStyle"/>
+                    android:textAlignment="center" />
             </LinearLayout>
 
 
@@ -90,21 +90,21 @@
 
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/tvHour"
+                    style="@style/InfoTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.3"
                     android:padding="16dp"
-                    android:text="Ώρα γεύματος:"
-                    style="@style/InfoTextStyle" />
+                    android:text="Ώρα γεύματος:" />
 
                 <ImageButton
                     android:id="@+id/imbtHour"
+                    style="@style/ImageButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="0.7"
-                    style="@style/ImageButtonStyle"/>
+                    android:layout_weight="0.7" />
             </LinearLayout>
 
 
@@ -125,21 +125,21 @@
 
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/tvDate"
+                    style="@style/InfoTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.3"
                     android:padding="16dp"
-                    android:text="Ημερομηνία:"
-                    style="@style/InfoTextStyle" />
+                    android:text="Ημερομηνία:" />
 
                 <ImageButton
                     android:id="@+id/imbtDate"
+                    style="@style/ImageButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="0.7"
-                    style="@style/ImageButtonStyle"/>
+                    android:layout_weight="0.7" />
             </LinearLayout>
         </LinearLayout>
 
@@ -159,7 +159,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:text="@string/ok"
-            android:theme="@style/OkButtonStyle"/>
+            android:theme="@style/OkButtonStyle" />
 
     </LinearLayout>
 

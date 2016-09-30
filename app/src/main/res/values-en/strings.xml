@@ -77,6 +77,5 @@
     <string name="gender">gender</string>
     <string name="ck_btn_string">Remember to workout</string>
     <string name="ok">Ok</string>
-    <string name="ck_btn_string">Remind me to workout</string>
     <string name="key_log_out">Log out user</string>
 </resources>

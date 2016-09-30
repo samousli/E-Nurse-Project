@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -23,19 +22,19 @@
 
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/tvCat"
+                    style="@style/InfoTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:padding="10dp"
-                    android:text="@string/category"
-                    style="@style/InfoTextStyle"  />
+                    android:text="@string/category" />
 
 
                 <Spinner
                     android:id="@+id/spChooseEx"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"/>
+                    android:layout_weight="0.4" />
 
 
             </LinearLayout>
@@ -58,23 +57,23 @@
 
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/tvQuantity"
+                    style="@style/InfoTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:lines="2"
                     android:padding="10dp"
-                    android:text="@string/timeOfWorkout"
-                    style="@style/InfoTextStyle"  />
+                    android:text="@string/timeOfWorkout" />
 
 
                 <EditText
                     android:id="@+id/etDuration"
+                    style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
-                    android:inputType="number"
-                    style="@style/EditTextStyle"  />
+                    android:inputType="number" />
 
 
             </LinearLayout>
@@ -89,12 +88,12 @@
 
             <me.grantland.widget.AutofitTextView
                 android:id="@+id/tvPeriod"
+                style="@style/InfoTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="@string/periodoFWORKOUT"
-                style="@style/InfoTextStyle" />
+                android:text="@string/periodoFWORKOUT" />
 
             <LinearLayout
                 android:id="@+id/lltod"
@@ -115,27 +114,27 @@
 
                     <RadioButton
                         android:id="@+id/rbMorn"
+                        style="@style/InfoTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
-                        android:text="@string/morning2"
-                        style="@style/InfoTextStyle" />
+                        android:text="@string/morning2" />
 
                     <RadioButton
                         android:id="@+id/rbNoon"
+                        style="@style/InfoTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
-                        android:text="@string/noon"
-                        style="@style/InfoTextStyle"  />
+                        android:text="@string/noon" />
 
                     <RadioButton
                         android:id="@+id/rbNight"
+                        style="@style/InfoTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
-                        android:text="@string/night2"
-                        style="@style/InfoTextStyle"  />
+                        android:text="@string/night2" />
                 </RadioGroup>
 
             </LinearLayout>
@@ -156,21 +155,21 @@
 
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/tvDate"
+                    style="@style/InfoTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.3"
                     android:padding="10dp"
-                    android:text="@string/datetime"
-                    style="@style/InfoTextStyle"  />
+                    android:text="@string/datetime" />
 
                 <ImageButton
                     android:id="@+id/imbtDate"
+                    style="@style/ImageButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="0.7"
-                    style="@style/ImageButtonStyle"/>
+                    android:layout_weight="0.7" />
             </LinearLayout>
 
         </LinearLayout>
@@ -191,7 +190,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:text="@string/ok"
-            android:theme="@style/OkButtonStyle"/>
+            android:theme="@style/OkButtonStyle" />
 
     </LinearLayout>
 

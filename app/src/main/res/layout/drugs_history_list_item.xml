@@ -16,25 +16,25 @@
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvAmount"
+            style="@style/InfoTextStyle"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:gravity="bottom|center_horizontal"
             android:text="100"
-            style="@style/InfoTextStyle"
             android:textSize="32sp"
             android:textStyle="bold" />
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvUnit"
+            style="@style/InfoTextStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="top|center_horizontal"
             android:singleLine="true"
             android:text="ml"
-            style="@style/InfoTextStyle"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -47,30 +47,30 @@
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvCategory"
+            style="@style/InfoTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            style="@style/InfoTextStyle"
             android:textSize="38sp" />
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvCause"
+            style="@style/InfoTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:padding="5dp"
             android:singleLine="true"
-            style="@style/InfoTextStyle"
             android:textSize="22sp" />
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvDateTime"
+            style="@style/InfoTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:padding="5dp"
-            android:singleLine="true"
-            style="@style/InfoTextStyle" />
+            android:singleLine="true" />
 
     </LinearLayout>
 

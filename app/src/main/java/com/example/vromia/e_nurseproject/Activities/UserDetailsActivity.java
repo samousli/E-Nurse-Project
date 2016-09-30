@@ -247,12 +247,12 @@ public class UserDetailsActivity extends Activity {
     private void initListeners() {
         fylo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-            if (rb_male.isChecked()) {
-                Sfylo = getString(R.string.male);
-                sex = 1;
-            } else if (rb_female.isChecked()) {
-                Sfylo = getString(R.string.female);
-                sex = 0;
+                if (rb_male.isChecked()) {
+                    Sfylo = getString(R.string.male);
+                    sex = 1;
+                } else if (rb_female.isChecked()) {
+                    Sfylo = getString(R.string.female);
+                    sex = 0;
             }
             }
         });

@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "848433435399",
-    "firebase_url": "https://e-nurse-project-2777d.firebaseio.com",
-    "project_id": "e-nurse-project-2777d",
-    "storage_bucket": "e-nurse-project-2777d.appspot.com"
+    "project_number": "1071751654869",
+    "firebase_url": "https://e-nurse-project.firebaseio.com",
+    "project_id": "e-nurse-project",
+    "storage_bucket": "e-nurse-project.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:848433435399:android:47965f6cfc6da7a4",
+        "mobilesdk_app_id": "1:1071751654869:android:47965f6cfc6da7a4",
         "android_client_info": {
           "package_name": "com.example.vromia.e_nurseproject"
         }
       },
       "oauth_client": [
         {
-          "client_id": "848433435399-u10u0j7k22ggoovmjveufqqavhve723n.apps.googleusercontent.com",
+          "client_id": "1071751654869-hg6pgrusi6a98q2rc2r6f9spaptakku9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.vromia.e_nurseproject",
-            "certificate_hash": "5627E96B7F447C09E9141CF84E7082530BC1FC4F"
+            "certificate_hash": "AC9687A5503D19B0BBE36526281A83706100577C"
           }
         },
         {
-          "client_id": "848433435399-2i8qufh8hsaeacumr9p118nivbgfi3qt.apps.googleusercontent.com",
+          "client_id": "1071751654869-f4u5cpvmggu01u3a2bu9t2bpgm9nbqb7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC07ZN97zJVF0KnaWuVQc959gbJ1YuGjSo"
+          "current_key": "AIzaSyAsNv0YVn4e3QM-ba3tSzapImsp6NtF6_g"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "848433435399-2i8qufh8hsaeacumr9p118nivbgfi3qt.apps.googleusercontent.com",
+              "client_id": "1071751654869-f4u5cpvmggu01u3a2bu9t2bpgm9nbqb7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

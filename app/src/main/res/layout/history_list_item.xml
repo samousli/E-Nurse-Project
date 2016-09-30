@@ -16,22 +16,22 @@
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvAmount"
+            style="@style/InfoTextStyle"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:gravity="bottom|center_horizontal"
-            style="@style/InfoTextStyle"
-            android:textSize="36sp"/>
+            android:textSize="36sp" />
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvUnit"
+            style="@style/InfoTextStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.25"
             android:gravity="center|center_horizontal"
             android:singleLine="true"
-            android:text="units"
-            style="@style/InfoTextStyle" />
+            android:text="units" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,23 +44,23 @@
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvCategory"
+            style="@style/InfoTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal"
             android:singleLine="true"
             android:text="Category"
-            android:gravity="center|center_horizontal"
-            style="@style/InfoTextStyle"
             android:textSize="36sp" />
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvDateTime"
+            style="@style/InfoTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal"
             android:padding="8dp"
             android:singleLine="true"
-            android:gravity="center|center_horizontal"
-            android:text="2 May at 21:20"
-            style="@style/InfoTextStyle" />
+            android:text="2 May at 21:20" />
 
     </LinearLayout>
 
