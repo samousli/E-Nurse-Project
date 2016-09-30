@@ -136,7 +136,8 @@ public class DrugsHistoryActivity extends FragmentActivity {
                         .setFirstDayOfWeek(Calendar.SUNDAY)
                         .setPreselectedDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
                         .setDoneText("Yes")
-                        .setCancelText("No");
+                        .setCancelText("No")
+                        .setThemeCustom(R.style.BetterPickersStyle);
                 cdate.show(manager, "Tag");
                 break;
 

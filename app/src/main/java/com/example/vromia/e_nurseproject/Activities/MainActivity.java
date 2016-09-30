@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.vromia.e_nurseproject.R;
-import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
 import com.example.vromia.e_nurseproject.Utils.StartServiceReceiver;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;

@@ -151,22 +151,16 @@ public class UserDetailsActivity extends Activity {
         final ArrayAdapter adapter = new ArrayAdapter(UserDetailsActivity.this, R.layout.spinner_item, R.id.tvSpinnerCategories, full_names);
         sDoctors.setAdapter(adapter);
 
-
-        if (true) {
-            llAccount.setVisibility(View.GONE);
-        }
-
+        llAccount.setVisibility(View.GONE);
 
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                diseases.add("Nikos");
                 diseases.add("");
                 addDiseases();
             }
         });
 //        listview.setAdapter(new DiseaseAdapter(UserDetailsActivity.this, diseases));
-
 
     }
 
@@ -182,7 +176,7 @@ public class UserDetailsActivity extends Activity {
             LayoutInflater inflater = null;
             inflater = (LayoutInflater) getApplicationContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View mLinearView = inflater.inflate(R.layout.list_item_disease_history, null);
+            View mLinearView = inflater.inflate(R.layout.disease_list_item, null);
             /**
              * getting id of row.xml
              */
@@ -244,16 +238,15 @@ public class UserDetailsActivity extends Activity {
     private void initListeners() {
         fylo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (rb_male.isChecked()) {
-                    Sfylo = getString(R.string.male);
-                    sex = 1;
-                } else if (rb_female.isChecked()) {
-                    Sfylo = getString(R.string.female);
-                    sex = 0;
-                }
+            if (rb_male.isChecked()) {
+                Sfylo = getString(R.string.male);
+                sex = 1;
+            } else if (rb_female.isChecked()) {
+                Sfylo = getString(R.string.female);
+                sex = 0;
+            }
             }
         });
-
 
         btOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -276,9 +269,7 @@ public class UserDetailsActivity extends Activity {
 
                     SistorikoPathiseon = SistorikoPathiseon.substring(0, SistorikoPathiseon.length() - 1);
                 }
-
                 SharedPrefsManager spmanager = new SharedPrefsManager(UserDetailsActivity.this);
-
 
                 flag = true;
                 String name = onoma.getText().toString();
@@ -287,7 +278,6 @@ public class UserDetailsActivity extends Activity {
                 String weight = baros.getText().toString();
                 String height = ypsos.getText().toString();
                 createUser(name, surname, age, weight, height);
-
 
                 spmanager.startEditing();
                 spmanager.setPrefsOnoma(Sonoma);
@@ -314,9 +304,7 @@ public class UserDetailsActivity extends Activity {
                     spmanager.setPrefsRoutine(0);
                 }
 
-
                 spmanager.commit();
-
 
                 if (!spmanager.getPrefsStart()) {
                     spmanager.startEditing();
@@ -328,11 +316,8 @@ public class UserDetailsActivity extends Activity {
                     startActivity(new Intent(UserDetailsActivity.this, HomeActivity.class));
                     finish();
                 }
-
-
             }
         });
-
 
         ckRoutine.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

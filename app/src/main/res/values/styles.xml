@@ -43,24 +43,29 @@
         <item name="bpPreHeaderBackgroundColor">#4db6ac</item>
         <item name="bpHeaderBackgroundColor">@android:color/white</item>
         <item name="bpHeaderSelectedTextColor">#4db6ac</item>
-        <item name="bpHeaderUnselectedTextColor">@android:color/white</item>
+        <item name="bpHeaderUnselectedTextColor">#10b1ff</item>
 
         <item name="bpBodyBackgroundColor">@color/white</item>
-        <item name="bpBodySelectedTextColor">#4db6ac</item>
-        <item name="bpBodyUnselectedTextColor">#4db6ac</item>
+        <item name="bpBodySelectedTextColor">#10b1ff</item>
+        <item name="bpBodyUnselectedTextColor">#10b1ff</item>
 
         <item name="bpRadialBackgroundColor">@color/white</item>
-        <item name="bpRadialTextColor">#4db6ac</item>
-        <item name="bpRadialPointerColor">#4db6ac</item>
+        <item name="bpRadialTextColor">#10b1ff</item>
+        <item name="bpRadialPointerColor">#10b1ff</item>
 
         <item name="bpButtonsBackgroundColor">@color/white</item>
         <item name="bpButtonsTextColor">#4db6ac</item>
     </style>
 
-    <style name="MyButton">
+    <style name="OkButtonStyle">
         <item name="colorControlHighlight">@color/background_color</item>
         <item name="colorButtonNormal">@color/White</item>
         <item name="android:textColor">#10b1ff</item>
+    </style>
+
+    <style name="ImageButtonStyle">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:tint">@color/White</item>
     </style>
 
 </resources>

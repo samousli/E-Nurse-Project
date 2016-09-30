@@ -85,7 +85,7 @@ public class DietActivity extends FragmentActivity {
             finalCategories.add(categories[i]);
         }
         ArrayAdapter adapter = new ArrayAdapter(DietActivity.this, R.layout.spinner_item,
-                                    R.id.tvSpinnerCategories, finalCategories);
+                R.id.tvSpinnerCategories, finalCategories);
         spinner.setAdapter(adapter);
 
         Calendar c = Calendar.getInstance();

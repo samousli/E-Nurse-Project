@@ -92,16 +92,16 @@ public class SettingsActivity extends PreferenceActivity {
             public boolean onPreferenceClick(Preference preference) {
 
                 //TODO export to file
-             db=new HealthDatabase(SettingsActivity.this);
+                db = new HealthDatabase(SettingsActivity.this);
 
 
-                if(haveNetworkConnection()){
-                    db=new HealthDatabase(SettingsActivity.this);
+                if (haveNetworkConnection()) {
+                    db = new HealthDatabase(SettingsActivity.this);
 
                     //new SyncAppData().execute();
                     //TODO do things with firebase
-                }else{
-                    Toast.makeText(SettingsActivity.this,getString(R.string.no_network),Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(SettingsActivity.this, getString(R.string.no_network), Toast.LENGTH_LONG).show();
                 }
 
 
@@ -276,7 +276,6 @@ public class SettingsActivity extends PreferenceActivity {
         if (PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).getBoolean("key_animations", false))
             overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
-
 
 
 }

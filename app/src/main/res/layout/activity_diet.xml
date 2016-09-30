@@ -69,7 +69,6 @@
                     android:layout_weight="0.4"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:text="1"
                     style="@style/EditTextStyle"/>
             </LinearLayout>
 
@@ -104,7 +103,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="0.7" />
+                    android:layout_weight="0.7"
+                    style="@style/ImageButtonStyle"/>
             </LinearLayout>
 
 
@@ -139,7 +139,7 @@
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="0.7"
-                    android:contentDescription="date" />
+                    style="@style/ImageButtonStyle"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -159,7 +159,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:text="@string/ok"
-            android:theme="@style/MyButton"/>
+            android:theme="@style/OkButtonStyle"/>
 
     </LinearLayout>
 

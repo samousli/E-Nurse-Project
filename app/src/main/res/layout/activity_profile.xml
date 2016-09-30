@@ -317,7 +317,7 @@
                 android:id="@+id/view3"
                 android:layout_width="wrap_content"
                 android:layout_height="2dp"
-                android:layout_marginBottom="3dp"
+                android:layout_marginBottom="4dp"
                 android:background="@drawable/line_separator" />
 
             <ImageButton
@@ -327,19 +327,21 @@
                 android:layout_gravity="bottom"
                 android:layout_weight="0.8"
                 android:src="@drawable/ic_plus"
-                style="@android:style/Widget.DeviceDefault.Button.Borderless"/>
+                android:layout_marginTop="16dp"
+                style="@style/ImageButtonStyle"/>
 
 
             <LinearLayout
                 android:id="@+id/llDiseases"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="@string/doctors_info"
                 style="@style/InfoTextStyle"
@@ -418,7 +420,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:theme="@style/MyButton"
+            android:theme="@style/OkButtonStyle"
             android:text="@string/ok" />
 
     </LinearLayout>
