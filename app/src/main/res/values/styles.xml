@@ -8,7 +8,7 @@
         <item name="colorPrimary">@color/SkyBlue</item>
         <item name="android:colorForeground">@color/Honeydew</item>
         <item name="colorPrimaryDark">@color/Bisque</item>
-        <item name="android:colorBackground">@color/Honeydew</item>
+        <item name="android:colorBackground">@color/transparent</item>
         <item name="android:textColorPrimary">@color/White</item>
         <item name="android:textColorSecondary">@color/background_color</item>
         <item name="android:textColorSecondaryInverse">@color/recurrence_bubble_text_color</item>
