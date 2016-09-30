@@ -16,14 +16,13 @@
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvAmount"
-            style="@style/InfoTextStyle"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:gravity="bottom|center_horizontal"
             android:text="100"
-            android:textSize="32sp"
-            android:textStyle="bold" />
+            style="@style/InfoTextStyle"
+            android:textSize="32sp"/>
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvUnit"
@@ -33,8 +32,7 @@
             android:layout_weight="1"
             android:gravity="top|center_horizontal"
             android:singleLine="true"
-            android:text="ml"
-            android:textSize="24sp" />
+            android:text="ml"/>
     </LinearLayout>
 
     <LinearLayout
@@ -51,24 +49,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:textSize="38sp" />
+            android:textSize="36sp" />
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvCause"
             style="@style/InfoTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:gravity="center|center_horizontal"
             android:padding="5dp"
-            android:singleLine="true"
-            android:textSize="22sp" />
+            android:singleLine="true" />
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvDateTime"
             style="@style/InfoTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:gravity="center|center_horizontal"
             android:padding="5dp"
             android:singleLine="true" />
 

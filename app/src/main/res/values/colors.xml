@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name='background_color'>#3d5c76</color>
-
+    <color name='background_color'>#10b1ff</color>
 
     <color name="white">#FFFFFF</color>
-    <color name="yellow">#FFFF00</color>
-    <color name="fuchsia">#FF00FF</color>
-    <color name="red">#FF0000</color>
-    <color name="lime">#00FF00</color>
-    <color name="teal">#000000</color>
-    <color name="green">#008000</color>
     <color name="black">#000000</color>
     <color name="White">#ffffff</color>
     <color name="Ivory">#FFFFF0</color>
@@ -26,9 +19,6 @@
     <color name="BlanchedAlmond">#ffebcd</color>
     <color name="MistyRose">#FFE4E1</color>
     <color name="Bisque">#000000</color>
-    <color name="Moccasin">#FFE4B5</color>
-    <color name="NavajoWhite">#FFDEAD</color>
-    <color name="PeachPuff">#FFDAB9</color>
     <color name="Gold">#FFD700</color>
     <color name="Pink">#FFC0CB</color>
     <color name="LightPink">#FFB6C1</color>
@@ -118,10 +108,9 @@
     <color name="OliveDrab">#6B8E23</color>
     <color name="SlateBlue">#6A5ACD</color>
 
-    <color name="transparent">#00000000</color>
+    <color name="transparent">#88FFFFFF</color>
     <color name="holo_light_primary_dark">#000000</color>
     <color name="foreground_material_light">#000000</color>
-    <color name="Test">#9a1414</color>
     <color name="secondary_text_material_dark">#b3000000</color>
-    <color name="sdas">#2a0404</color>
+    <color name="secondary_text">#0277bd</color>
 </resources>

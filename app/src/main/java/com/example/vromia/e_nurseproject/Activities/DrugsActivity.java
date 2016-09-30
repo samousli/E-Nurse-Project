@@ -33,7 +33,7 @@ public class DrugsActivity extends FragmentActivity {
     AutoCompleteTextView textView;
     String[] name = {
             "Πονοκέφαλος", "Ημικρανία", "Πονόλαιμος", "Πόνοι Περιόδου",
-            "Πίεση", "Κάψιμο", "Πυρετός", "Ναυτία"};
+            "Πίεση", "Κάψιμο", "Πυρετός", "Ναυτία"}; // ???
     private RadioButton bMorn;
     private RadioButton bNoon;
     private RadioButton bNight;

@@ -18,21 +18,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
+            android:gravity="center|center_horizontal"
             android:text="Category"
-            android:textColor="@color/green"
+            style="@style/InfoTextStyle"
             android:textSize="40sp" />
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvCause"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:padding="5dp"
             android:singleLine="true"
+            android:gravity="center|center_horizontal"
             android:text="Πονοκέφαλος"
-            android:textStyle="italic"
-            android:textColor="@color/teal"
-            android:textSize="25sp" />
+            style="@style/InfoTextStyle" />
 
 
     </LinearLayout>
