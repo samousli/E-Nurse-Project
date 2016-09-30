@@ -107,6 +107,7 @@
     <string name="body_info">Σωματικά στοιχεία</string>
     <string name="gender">Φύλο</string>
     <string name="ck_btn_string" >Υπενθύμιση Άσκησης</string>
+    <string name="key_log_out">Έξοδος Χρήστη</string>
 
 
 </resources>

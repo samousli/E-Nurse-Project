@@ -153,9 +153,10 @@ public class WorkoutActivity extends FragmentActivity {
                             Toast.LENGTH_LONG);
                 }
                 HealthDatabase db = new HealthDatabase(WorkoutActivity.this);//instance of current database
-                WorkoutItem item = new WorkoutItem(exName, date, quantity, tod);
+                WorkoutItem item = new WorkoutItem(exName, date, quantity, tod, 0);
                 Log.i("msg", exName + " " + date + " " + quantity + " " + tod);
                 db.InsertWorkout(item);
+                item.setId(db.getLastId(HealthDatabase.TABLE_WORKOUT));
                 db.close();
                 Toast.makeText(WorkoutActivity.this, getString(R.string.successfulEntry),
                         Toast.LENGTH_LONG).show();

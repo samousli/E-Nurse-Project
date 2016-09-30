@@ -9,15 +9,17 @@ public class DietItem {
     private String date;
     private double amount;
     private String time;
+    private int id;
 
     public DietItem() {
     }
 
-    public DietItem(String category,String date,double amount,String time){
+    public DietItem(String category, String date, double amount, String time, int id) {
         this.category=category;
         this.date=date;
         this.amount=amount;
         this.time=time;
+        this.id = id;
 
     }
 
@@ -37,5 +39,12 @@ public class DietItem {
         return time;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
 }

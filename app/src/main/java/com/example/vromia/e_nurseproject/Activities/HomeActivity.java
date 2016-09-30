@@ -12,6 +12,8 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.vromia.e_nurseproject.Data.DietItem;
+import com.example.vromia.e_nurseproject.Data.DoctorItem;
+import com.example.vromia.e_nurseproject.Data.DrugsItem;
 import com.example.vromia.e_nurseproject.Data.GridItem;
 import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.Data.WorkoutItem;
@@ -32,20 +34,11 @@ import java.util.ArrayList;
  */
 public class HomeActivity extends Activity {
 
-    private static final String TAG_DIET = "nutrition";
-    private static final String TAG_MEALTIME = "mealTime";
-    private static final String TAG_DATE = "date";
-    private static final String TAG_MEAL = "meal";
-    private static final String TAG_WORKOUT = "exercise";
-    private static final String TAG_TYPE = "type";
-    private static final String TAG_DURATION = "duration";
+
     private static final String TAG = "HOME ACTIVITY";
     private GridView gridView;
     private ArrayList<GridItem> items;
     private HealthDatabase db;
-    private ArrayList<DietItem> dietItems;
-    private ArrayList<WorkoutItem> workoutItems;
-    private boolean updateDiet = false, updateWorkout = false;
 
     private DatabaseReference mDatabase;
 
@@ -57,8 +50,11 @@ public class HomeActivity extends Activity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        db = new HealthDatabase(this);
         updateDietDatabase();
         updateWorkoutDatabase();
+        updateDoctorDatabase();
+        updateDrugDatabase();
 
 
         gridView = (GridView) findViewById(R.id.gridview);
@@ -136,9 +132,11 @@ public class HomeActivity extends Activity {
 
                 // A new comment has been added, add it to the displayed list
                 DietItem item = dataSnapshot.getValue(DietItem.class);
-                if (!db.dietTupleExists(item.getCategory(), item.getTime())) {
+                Log.d(TAG, "diete-item " + item.toString());
+
                     db.InsertDiet(item);
-                }
+                db.updateDiet(item);
+
 
             }
 
@@ -175,7 +173,7 @@ public class HomeActivity extends Activity {
             }
         };
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mDatabase.child("user-diet").addChildEventListener(childEventListener);
+        mDatabase.child("user-diet").child(userId).addChildEventListener(childEventListener);
     }
 
     public void updateWorkoutDatabase() {
@@ -186,9 +184,9 @@ public class HomeActivity extends Activity {
 
                 // A new comment has been added, add it to the displayed list
                 WorkoutItem item = dataSnapshot.getValue(WorkoutItem.class);
-                if (!db.workoutTupleExists(item.getCategory(), item.getWorkTime(), item.getDate())) {
-                    db.InsertWorkout(item);
-                }
+
+                db.InsertWorkout(item);
+                db.updatWorkOut(item);
 
             }
 
@@ -228,4 +226,102 @@ public class HomeActivity extends Activity {
         mDatabase.child("user-workout").child(userId).addChildEventListener(childEventListener);
     }
 
+    public void updateDoctorDatabase() {
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+
+                // A new comment has been added, add it to the displayed list
+                DoctorItem item = dataSnapshot.getValue(DoctorItem.class);
+
+                db.InsertDoctor(item);
+                db.UpdateDoctor(item);
+
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
+
+                // A comment has changed, use the key to determine if we are displaying this
+                // comment and if so displayed the changed comment.
+                DoctorItem item = dataSnapshot.getValue(DoctorItem.class);
+                db.UpdateDoctor(item);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
+
+                String commentKey = dataSnapshot.getKey();
+                //TODO remove item from database
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
+                //DO NOTHING
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
+                Toast.makeText(HomeActivity.this, "Failed to load WorkoutItems.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
+        mDatabase.child("doctors").addChildEventListener(childEventListener);
+    }
+
+    public void updateDrugDatabase() {
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+
+                // A new comment has been added, add it to the displayed list
+                DrugsItem item = dataSnapshot.getValue(DrugsItem.class);
+
+                db.InsertDrugs(item);
+                db.updatDrugs(item);
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
+
+                // A comment has changed, use the key to determine if we are displaying this
+                // comment and if so displayed the changed comment.
+                //WorkoutItem newComment = dataSnapshot.getValue(WorkoutItem.class);
+                //String commentKey = dataSnapshot.getKey();
+                //TODO update item
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
+
+                String commentKey = dataSnapshot.getKey();
+                //TODO remove item from database
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
+                //DO NOTHING
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
+                Toast.makeText(HomeActivity.this, "Failed to load WorkoutItems.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mDatabase.child("user-drugs").child(userId).addChildEventListener(childEventListener);
+    }
 }

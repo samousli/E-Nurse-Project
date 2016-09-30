@@ -173,8 +173,9 @@ public class DietActivity extends FragmentActivity {
 
                 HealthDatabase db = new HealthDatabase(DietActivity.this);//instance of current database
 
-                DietItem item = new DietItem(foodName, date, quantity, hour);
+                DietItem item = new DietItem(foodName, date, quantity, hour, 0);
                 db.InsertDiet(item);
+                item.setId(db.getLastId(HealthDatabase.TABLE_DIET));
                 db.close();
                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 FirebaseDatabase.getInstance().getReference().child("user-diet").child(uid).push().setValue(item);

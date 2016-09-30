@@ -8,6 +8,9 @@ public class DoctorItem {
     private String name;
     private String surname;
 
+    public DoctorItem() {
+    }
+
     public DoctorItem(int id,String name,String surname){
         this.id=id;
         this.name=name;

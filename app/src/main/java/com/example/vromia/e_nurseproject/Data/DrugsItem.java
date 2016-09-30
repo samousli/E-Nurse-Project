@@ -10,15 +10,21 @@ public class DrugsItem {
     private String periodOfDay;
     private double quantity;
     private String cause;
+    private int id;
 
-    public DrugsItem(String category, String date, double quantity, String periodOfDay,String cause) {
+    public DrugsItem(String category, String date, double quantity, String periodOfDay, String cause, int id) {
 
         this.category = category;
         this.date = date;
         this.quantity = quantity;
         this.periodOfDay = periodOfDay;
         this.cause=cause;
+        this.id = id;
 
+
+    }
+
+    public DrugsItem() {
     }
 
     public String getCategory() {
@@ -41,5 +47,12 @@ public class DrugsItem {
         return  cause;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
 }

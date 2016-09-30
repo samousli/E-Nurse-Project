@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import com.example.vromia.e_nurseproject.Data.HealthDatabase;
+import com.example.vromia.e_nurseproject.Data.UserItem;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,8 +34,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -62,6 +61,8 @@ public class UserDetailsActivity extends Activity {
     private float weight;
     private float height;
     private SharedPrefsManager manager;
+    private ArrayList<String> full_names;
+    private int d_id;
 
 
     @Override
@@ -73,10 +74,7 @@ public class UserDetailsActivity extends Activity {
         diseases = new ArrayList<>();
 
         initUI();
-
         getUser();
-
-
         setUpUI();
         initListeners();
 
@@ -128,6 +126,15 @@ public class UserDetailsActivity extends Activity {
             diseases.add(i);
         }
         addDiseases();
+        d_id = manager.getPrefsD_id();
+        if (full_names.size() > 0) {
+            if (full_names.size() == (1 + d_id)) {
+
+                sDoctors.setSelection(d_id);
+            } else {
+                sDoctors.setSelection(0);
+            }
+        }
 
         long r = manager.getPrefsRoutine();
         if (r == 0) {
@@ -145,11 +152,13 @@ public class UserDetailsActivity extends Activity {
 
     private void setUpUI() {
         hdb = new HealthDatabase(UserDetailsActivity.this);
-        ArrayList<String> full_names = hdb.getDoctorsFullName();
+        full_names = hdb.getDoctorsFullName();
         hdb.close();
 
         final ArrayAdapter adapter = new ArrayAdapter(UserDetailsActivity.this, R.layout.spinner_item, R.id.tvSpinnerCategories, full_names);
         sDoctors.setAdapter(adapter);
+        sDoctors.setSelection(0);
+
 
 
         if (true) {
@@ -292,9 +301,9 @@ public class UserDetailsActivity extends Activity {
                 spmanager.startEditing();
                 spmanager.setPrefsOnoma(Sonoma);
                 spmanager.setPrefsSurname(Ssurname);
-                spmanager.setPrefsIlikia(Integer.parseInt(Silikia));
-                spmanager.setPrefsBaros(Float.parseFloat(Sbaros));
-                spmanager.setPrefsYpsos(Float.parseFloat(Sypsos));
+                spmanager.setPrefsIlikia(Integer.parseInt("0" + Silikia));
+                spmanager.setPrefsBaros(Float.parseFloat("0" + Sbaros));
+                spmanager.setPrefsYpsos(Float.parseFloat("0" + Sypsos));
                 spmanager.setPrefsIstorikoPathiseon(SistorikoPathiseon);
                 spmanager.setPrefsFylo(Sfylo);
 
@@ -347,20 +356,31 @@ public class UserDetailsActivity extends Activity {
     }
 
     private void createUser(String name, String surname, String age, String weight, String height) {
-        String doctor_full_name = sDoctors.getSelectedItem().toString();
+        String doctor_full_name;
+        if (sDoctors.getCount() > 0) {
+            doctor_full_name = full_names.get(sDoctors.getSelectedItemPosition());
+            d_id = sDoctors.getSelectedItemPosition();
+        } else {
+            doctor_full_name = "Dr house";
+            d_id = -1;
+        }
+
+
         String tokens[] = doctor_full_name.split(" ");
-        Map<String, Object> values = new HashMap<>();
-        values.put("DOCTOR_NAME", tokens[0]);
-        values.put("DOCTOR_SNAME", tokens[1]);
-        values.put("USERNAME", name);
-        values.put("USERSURNAME", surname);
-        values.put("AGE", age);
-        values.put("WEIGHT", weight);
-        values.put("HEIGHT", height);
+        UserItem values = new UserItem();
+        values.setDoctorMame(tokens[0]);
+        values.setDoctorSName(tokens[1]);
+        values.setUserName(name);
+        values.setUserSName(surname);
+        values.setAge(age);
+        values.setWeight(weight);
+        values.setHeight(height);
+        values.setSex(Sfylo);
+        values.setD_id(d_id);
 
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
-        mRef.child("users").child(uid).updateChildren(values);
+        mRef.child("users").child(uid).setValue(values);
     }
 
 
@@ -371,20 +391,23 @@ public class UserDetailsActivity extends Activity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    Map<String, String> value = dataSnapshot.getValue(Map.class);
-                    userName = value.get("USERNAME");
-                    userSurname = value.get("USERSURNAME");
-                    age = Integer.parseInt(value.get("AGE"));
-                    Sfylo = value.get("SEX");
-                    weight = Float.parseFloat(value.get("WEIGHT"));
-                    height = Float.parseFloat(value.get("HEIGHT"));
 
+                    UserItem value = dataSnapshot.getValue(UserItem.class);
+                    if (value == null) return;
+                    userName = value.getUserName();
+                    userSurname = value.getUserSName();
+                    age = Integer.parseInt(value.getAge());
+                    Sfylo = value.getSex();
+                    weight = Float.parseFloat(value.getWeight());
+                    height = Float.parseFloat(value.getHeight());
+                    d_id = value.getD_id();
                     manager.startEditing();
                     manager.setPrefsOnoma(userName);
                     manager.setPrefsSurname(userSurname);
                     manager.setPrefsIlikia(age);
                     manager.setPrefsBaros(weight);
                     manager.setPrefsYpsos(height);
+                    manager.setPrefsD_id(d_id);
                     //manager.setPrefsIstorikoPathiseon(SistorikoPathiseon);
                     manager.setPrefsFylo(Sfylo);
 

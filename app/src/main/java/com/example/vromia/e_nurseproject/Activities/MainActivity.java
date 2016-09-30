@@ -6,15 +6,18 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.vromia.e_nurseproject.Data.DoctorItem;
+import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
 import com.example.vromia.e_nurseproject.Utils.StartServiceReceiver;
 import com.firebase.ui.auth.AuthUI;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,6 +30,7 @@ import static com.firebase.ui.auth.ui.AcquireEmailHelper.RC_SIGN_IN;
 
 public class MainActivity extends Activity {
     private static final long REPEAT_TIME = 1000 * 10;
+    private HealthDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,18 +53,38 @@ public class MainActivity extends Activity {
         service.setRepeating(AlarmManager.RTC_WAKEUP,
                 cal.getTimeInMillis(), REPEAT_TIME, pending);
 
-
+        db = new HealthDatabase(this);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(MainActivity.this, HomeActivity.class));
-            this.finish();
+            FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                        finish();
+                    } else {
+                        updateDoctorDatabase();
+
+                        startActivity(new Intent(MainActivity.this, UserDetailsActivity.class));
+                        HealthDatabase db = new HealthDatabase(MainActivity.this);
+                        db.rectreateDB();
+                        db.close();
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         } else {
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
                             .setProviders(
                                     AuthUI.EMAIL_PROVIDER,
-                                    AuthUI.FACEBOOK_PROVIDER)
+                                    AuthUI.GOOGLE_PROVIDER)
                             .build(),
                     RC_SIGN_IN);
         }
@@ -89,37 +113,44 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
 
+
+                HealthDatabase db = new HealthDatabase(MainActivity.this);
+                db.rectreateDB();
+                db.close();
+
+                updateDoctorDatabase();
                 //Comment the following if any crush happens
                 //from here
-//                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//
-//                FirebaseDatabase.getInstance().getReference().child("users").child(uid).addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        if (dataSnapshot.exists()) {
-//                            startActivity(new Intent(MainActivity.this, HomeActivity.class));
-//                            finish();
-//                        } else {
-//                            startActivity(new Intent(MainActivity.this, UserDetailsActivity.class));
-//                            finish();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                FirebaseDatabase.getInstance().getReference().child("users").child(uid).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                            finish();
+                        } else {
+                            startActivity(new Intent(MainActivity.this, UserDetailsActivity.class));
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
                 //to here
                 //comment out the following
-
-                startActivity(new Intent(MainActivity.this, HomeActivity.class));
-                finish();
+//
+//                startActivity(new Intent(MainActivity.this, HomeActivity.class));
+//                finish();
 
 
             } else {
@@ -127,5 +158,52 @@ public class MainActivity extends Activity {
                 // "sign in" again, or show a message
             }
         }
+    }
+
+    public void updateDoctorDatabase() {
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d("", "onChildAdded:" + dataSnapshot.getKey());
+
+                // A new comment has been added, add it to the displayed list
+                DoctorItem item = dataSnapshot.getValue(DoctorItem.class);
+
+                db.InsertDoctor(item);
+                db.UpdateDoctor(item);
+
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d("", "onChildChanged:" + dataSnapshot.getKey());
+
+                // A comment has changed, use the key to determine if we are displaying this
+                // comment and if so displayed the changed comment.
+                DoctorItem item = dataSnapshot.getValue(DoctorItem.class);
+                db.UpdateDoctor(item);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.d("", "onChildRemoved:" + dataSnapshot.getKey());
+
+                String commentKey = dataSnapshot.getKey();
+                //TODO remove item from database
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d("", "onChildMoved:" + dataSnapshot.getKey());
+                //DO NOTHING
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        FirebaseDatabase.getInstance().getReference().child("doctors").addChildEventListener(childEventListener);
     }
 }

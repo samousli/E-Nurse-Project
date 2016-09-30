@@ -22,8 +22,8 @@
             <!--android:title="Διαγραφη δεδομενων Διατροφης" />-->
 
         <Preference
-            android:key="key_export"
-            android:title="@string/key_export" />
+            android:key="key_log_out"
+            android:title="@string/key_log_out" />
     </PreferenceCategory>
 
     <PreferenceCategory

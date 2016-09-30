@@ -9,16 +9,18 @@ public class WorkoutItem {
     private String date;
     private String periodOfDay;
     private double workTime;
+    private int id;
 
     public WorkoutItem() {
     }
 
-    public WorkoutItem(String category, String date, double workTime, String periodOfDay) {
+    public WorkoutItem(String category, String date, double workTime, String periodOfDay, int id) {
 
         this.category = category;
         this.date = date;
         this.workTime = workTime;
         this.periodOfDay = periodOfDay;
+        this.id = id;
 
     }
 
@@ -38,4 +40,11 @@ public class WorkoutItem {
         return workTime;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

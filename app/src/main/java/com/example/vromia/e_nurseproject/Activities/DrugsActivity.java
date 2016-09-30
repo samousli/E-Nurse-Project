@@ -18,6 +18,8 @@ import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialo
 import com.example.vromia.e_nurseproject.Data.DrugsItem;
 import com.example.vromia.e_nurseproject.Data.HealthDatabase;
 import com.example.vromia.e_nurseproject.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -172,10 +174,15 @@ public class DrugsActivity extends FragmentActivity {
 //                String cause = etCause.getText().toString();
                 String cause = textView.getText().toString();
                 HealthDatabase db = new HealthDatabase(DrugsActivity.this);//instance of current database
-                DrugsItem item = new DrugsItem(exName, date, quantity, tod,cause);
+                DrugsItem item = new DrugsItem(exName, date, quantity, tod, cause, 0);
                 Log.i("msg", exName + " " + date + " " + quantity + " " + tod);
                 db.InsertDrugs(item);
+                item.setId(db.getLastId(HealthDatabase.TABLE_DRUGS));
                 db.close();
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                FirebaseDatabase.getInstance().getReference().child("user-drugs").child(uid).push().setValue(item);
+
+
                 Toast.makeText(DrugsActivity.this, getString(R.string.successfulEntry), Toast.LENGTH_LONG).show();
                 finish();
 
