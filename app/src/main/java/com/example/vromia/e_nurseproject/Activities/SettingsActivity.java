@@ -141,6 +141,7 @@ public class SettingsActivity extends PreferenceActivity {
                 return false;
             }
         });
+    }
 
 
         screen = findPreference("key_log_out");
@@ -174,7 +175,6 @@ public class SettingsActivity extends PreferenceActivity {
         if (PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).getBoolean("key_animations", false))
             overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
-
 
 
 }

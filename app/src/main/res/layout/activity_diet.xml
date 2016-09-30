@@ -3,17 +3,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/app_background">
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-
 
             <LinearLayout
                 android:id="@+id/llCategory"
@@ -23,29 +20,22 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/tvCat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
-                    android:padding="10dp"
-                    android:text="Κατηγορία:"
-                    android:textColor="#de000000"
-                    android:textSize="20sp" />
-
+                    android:padding="16dp"
+                    style="@style/InfoTextStyle"
+                    android:text="Κατηγορία:"/>
 
                 <Spinner
                     android:id="@+id/spChooseFood"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-
-                    />
-
+                    android:layout_weight="0.4"/>
 
             </LinearLayout>
-
 
             <View
                 android:layout_width="wrap_content"
@@ -53,15 +43,13 @@
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/line_separator" />
 
-
             <LinearLayout
                 android:id="@+id/llQuant"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 android:weightSum="1">
-
 
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/tvQuantity"
@@ -69,12 +57,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:lines="2"
-                    android:padding="10dp"
+                    android:padding="16dp"
                     android:text="Ποσότητα: (Μερίδα)"
-                    android:textColor="#de000000"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
-
+                    style="@style/InfoTextStyle"/>
 
                 <EditText
                     android:id="@+id/etQuant"
@@ -82,14 +67,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
-                    android:editable="false"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:hint="1"
                     android:inputType="number"
-                    android:textColor="#de000000" />
-
-
+                    android:textAlignment="center"
+                    style="@style/EditTextStyle"/>
             </LinearLayout>
 
 
@@ -103,7 +83,7 @@
                 android:id="@+id/llhour"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -114,11 +94,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.3"
-                    android:padding="10dp"
+                    android:padding="16dp"
                     android:text="Ώρα γεύματος:"
-                    android:textColor="#de000000"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
+                    style="@style/InfoTextStyle" />
 
                 <ImageButton
                     android:id="@+id/imbtHour"
@@ -126,9 +104,7 @@
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="0.7"
-                    android:contentDescription="time" />
-
-
+                    style="@style/ImageButtonStyle"/>
             </LinearLayout>
 
 
@@ -143,7 +119,7 @@
                 android:id="@+id/lldate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -153,11 +129,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.3"
-                    android:padding="10dp"
+                    android:padding="16dp"
                     android:text="Ημερομηνία:"
-                    android:textColor="#de000000"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
+                    style="@style/InfoTextStyle" />
 
                 <ImageButton
                     android:id="@+id/imbtDate"
@@ -165,10 +139,8 @@
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="0.7"
-                    android:contentDescription="date" />
+                    style="@style/ImageButtonStyle"/>
             </LinearLayout>
-
-
         </LinearLayout>
 
 
@@ -186,10 +158,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="@color/YellowGreen"
-            android:text="Ok" />
+            android:text="@string/ok"
+            android:theme="@style/OkButtonStyle"/>
 
     </LinearLayout>
-
 
 </RelativeLayout>

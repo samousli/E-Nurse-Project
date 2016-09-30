@@ -41,7 +41,7 @@ public class DrugsActivity extends FragmentActivity {
     private ImageButton bDate;
     private Button bBack;
     private Button bOk;
-    private EditText quantField,etCause;
+    private EditText quantField, etCause;
     private Spinner spinner;
     private CalendarDatePickerDialogFragment cdate;//gui for showing date
     private String date, tod;
@@ -90,7 +90,8 @@ public class DrugsActivity extends FragmentActivity {
                 .setFirstDayOfWeek(Calendar.SUNDAY)
                 .setPreselectedDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
                 .setDoneText("Yes")
-                .setCancelText("No");
+                .setCancelText("No")
+                .setThemeCustom(R.style.BetterPickersStyle);
 
 
         //Initialize variable date to current date
@@ -121,8 +122,7 @@ public class DrugsActivity extends FragmentActivity {
         bOk = (Button) findViewById(R.id.btOk);
 
 
-
-        ArrayAdapter<String> causesAdapter = new ArrayAdapter<String> (this,android.R.layout.simple_dropdown_item_1line,name);
+        ArrayAdapter<String> causesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, name);
         textView.setThreshold(3);
         textView.setAdapter(causesAdapter);
 
@@ -194,6 +194,6 @@ public class DrugsActivity extends FragmentActivity {
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
-        overridePendingTransition(R.anim.pull_in_left , R.anim.push_out_right);
+        overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
 }

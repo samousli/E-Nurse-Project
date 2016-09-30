@@ -30,7 +30,6 @@ import static com.firebase.ui.auth.ui.AcquireEmailHelper.RC_SIGN_IN;
 
 public class MainActivity extends Activity {
     private static final long REPEAT_TIME = 1000 * 10;
-    private HealthDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +37,9 @@ public class MainActivity extends Activity {
         //setContentView(R.layout.activity_main);
 
         //boolean isPass = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("PREFS_START_OFF_APP" , false);
-        SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(MainActivity.this);
-
-        boolean pass = sharedPrefsManager.getPrefsStart();
-
+//        SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(MainActivity.this);
+//
+//        boolean pass = sharedPrefsManager.getPrefsStart();
 
         AlarmManager service = (AlarmManager) this
                 .getSystemService(ALARM_SERVICE);
@@ -84,7 +82,7 @@ public class MainActivity extends Activity {
                             .createSignInIntentBuilder()
                             .setProviders(
                                     AuthUI.EMAIL_PROVIDER,
-                                    AuthUI.GOOGLE_PROVIDER)
+                                    AuthUI.FACEBOOK_PROVIDER)
                             .build(),
                     RC_SIGN_IN);
         }
@@ -113,7 +111,6 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {

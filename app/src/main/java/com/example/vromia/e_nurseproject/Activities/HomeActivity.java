@@ -47,7 +47,7 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        db = new HealthDatabase(this.getApplicationContext());
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         db = new HealthDatabase(this);
@@ -78,7 +78,7 @@ public class HomeActivity extends Activity {
                 R.drawable.ic_exit), getString(R.string.exit)));
 
 
-        GridAdapter adapter = new GridAdapter(HomeActivity.this, R.layout.grid_item_menu, items);
+        GridAdapter adapter = new GridAdapter(HomeActivity.this, R.layout.home_menu_item, items);
         gridView.setAdapter(adapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

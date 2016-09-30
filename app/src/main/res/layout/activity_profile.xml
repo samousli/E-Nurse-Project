@@ -29,9 +29,8 @@
                     android:layout_marginTop="12dp"
                     android:gravity="center"
                     android:text="@string/accountDetails"
-                    android:textColor="#003399"
-                    android:textSize="30sp"
-                    android:textStyle="italic" />
+                    style="@style/InfoTextStyle"
+                    android:textSize="30sp"/>
 
                 <View
                     android:id="@+id/view5"
@@ -44,17 +43,16 @@
                     android:id="@+id/llUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="8dp"
                     android:weightSum="1">
 
                     <me.grantland.widget.AutofitTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:padding="10dp"
+                        android:padding="16dp"
                         android:text="@string/nameAccount"
-                        android:textColor="#de000000"
-                        android:textSize="20sp" />
+                        style="@style/InfoTextStyle"/>
 
                     <EditText
                         android:id="@+id/etUsername"
@@ -62,10 +60,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:ems="10"
-                        android:hint="nikozisi"
                         android:inputType="textPersonName"
-                        android:textColor="#de000000"
-                        android:textSize="20sp" />
+                        style="@style/EditTextStyle" />
 
                 </LinearLayout>
 
@@ -73,17 +69,16 @@
                     android:id="@+id/llPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="8dp"
                     android:weightSum="1">
 
                     <me.grantland.widget.AutofitTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:padding="10dp"
+                        android:padding="16dp"
                         android:text="@string/pass"
-                        android:textColor="#de000000"
-                        android:textSize="20sp" />
+                        style="@style/InfoTextStyle" />
 
                     <EditText
                         android:id="@+id/etPassword"
@@ -91,10 +86,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:ems="10"
-                        android:hint="Ζήσης"
-                        android:inputType="text"
-                        android:textColor="#de000000"
-                        android:textSize="20sp" />
+                        android:inputType="textPassword"
+                        style="@style/InfoTextStyle" />
 
                 </LinearLayout>
 
@@ -106,9 +99,8 @@
                 android:layout_marginTop="12dp"
                 android:gravity="center"
                 android:text="@string/personalDetails"
-                android:textColor="#003399"
-                android:textSize="30sp"
-                android:textStyle="italic" />
+                style="@style/InfoTextStyle"
+                android:textSize="30sp"/>
 
             <View
                 android:id="@+id/view1"
@@ -128,10 +120,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:padding="10dp"
+                    android:padding="16dp"
                     android:text="@string/namAccount"
-                    android:textColor="#de000000"
-                    android:textSize="20sp" />
+                    style="@style/InfoTextStyle"/>
 
                 <EditText
                     android:id="@+id/onoma"
@@ -139,10 +130,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:ems="10"
-                    android:hint="Νίκος"
                     android:inputType="textPersonName"
-                    android:textColor="#de000000"
-                    android:textSize="20sp" />
+                    style="@style/EditTextStyle" />
 
             </LinearLayout>
 
@@ -156,10 +145,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:padding="10dp"
+                    android:padding="16dp"
                     android:text="@string/surname"
-                    android:textColor="#de000000"
-                    android:textSize="20sp" />
+                    style="@style/InfoTextStyle" />
 
                 <EditText
                     android:id="@+id/etsurname"
@@ -167,27 +155,23 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:ems="10"
-                    android:hint="Ζήσης"
-                    android:inputType="textPersonName"
-                    android:textColor="#de000000"
-                    android:textSize="20sp" />
+                    style="@style/EditTextStyle" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:weightSum="1">
 
                 <me.grantland.widget.AutofitTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:padding="10dp"
+                    android:padding="16dp"
                     android:text="@string/age"
-                    android:textColor="#de000000"
-                    android:textSize="20sp" />
+                    style="@style/InfoTextStyle" />
 
                 <EditText
                     android:id="@+id/ilikia"
@@ -195,10 +179,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:ems="10"
-                    android:hint="84"
                     android:inputType="number"
-                    android:textColor="#de000000"
-                    android:textSize="20sp" />
+                    style="@style/EditTextStyle"  />
 
 
             </LinearLayout>
@@ -215,8 +197,7 @@
                     android:layout_weight="0.5"
                     android:padding="10dp"
                     android:text="@string/gender"
-                    android:textColor="#de000000"
-                    android:textSize="20sp" />
+                    style="@style/InfoTextStyle"/>
 
 
                 <RadioGroup
@@ -232,16 +213,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/male"
-                        android:textColor="#de000000"
-                        android:textSize="20sp" />
+                        style="@style/InfoTextStyle" />
 
                     <RadioButton
                         android:id="@+id/rb_female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/female"
-                        android:textColor="#de000000"
-                        android:textSize="20sp" />
+                        style="@style/InfoTextStyle" />
 
                 </RadioGroup>
 
@@ -251,12 +230,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="@string/body_info"
-                android:textColor="#003399"
-                android:textSize="30sp"
-                android:textStyle="italic" />
+                style="@style/InfoTextStyle"
+                android:textSize="30sp"/>
 
             <View
                 android:id="@+id/view2"
@@ -265,11 +243,10 @@
                 android:layout_marginBottom="3dp"
                 android:background="@drawable/line_separator" />
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="6dp"
                 android:weightSum="1">
 
                 <me.grantland.widget.AutofitTextView
@@ -278,8 +255,7 @@
                     android:layout_weight="0.5"
                     android:padding="10dp"
                     android:text="@string/height"
-                    android:textColor="#de000000"
-                    android:textSize="20sp" />
+                    style="@style/InfoTextStyle"  />
 
                 <EditText
                     android:id="@+id/ypsos"
@@ -287,10 +263,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:ems="10"
-                    android:hint="180 "
                     android:inputType="number"
-                    android:textColor="#de000000"
-                    android:textSize="20sp" />
+                    style="@style/EditTextStyle"  />
 
             </LinearLayout>
 
@@ -307,8 +281,7 @@
                     android:layout_weight="0.5"
                     android:padding="10dp"
                     android:text="@string/weight"
-                    android:textColor="#de000000"
-                    android:textSize="20sp" />
+                    style="@style/InfoTextStyle" />
 
                 <EditText
                     android:id="@+id/baros"
@@ -316,10 +289,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:ems="10"
-                    android:hint="85 "
                     android:inputType="number"
-                    android:textColor="#de000000"
-                    android:textSize="20sp" />
+                    style="@style/EditTextStyle" />
 
             </LinearLayout>
 
@@ -336,9 +307,7 @@
                     android:layout_weight="0.2"
                     android:gravity="center"
                     android:text="@string/illness_history"
-                    android:textColor="#003399"
-                    android:textSize="30sp"
-                    android:textStyle="italic" />
+                    style="@style/InfoTextStyle" />
 
 
             </LinearLayout>
@@ -348,59 +317,35 @@
                 android:id="@+id/view3"
                 android:layout_width="wrap_content"
                 android:layout_height="2dp"
-                android:layout_marginBottom="3dp"
+                android:layout_marginBottom="4dp"
                 android:background="@drawable/line_separator" />
 
             <ImageButton
                 android:id="@+id/ibAddHistory"
-                style="@android:style/Widget.DeviceDefault.Button.Borderless"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_gravity="bottom"
                 android:layout_weight="0.8"
-                android:src="@drawable/ic_plus" />
+                android:src="@drawable/ic_plus"
+                android:layout_marginTop="16dp"
+                style="@style/ImageButtonStyle"/>
 
 
             <LinearLayout
                 android:id="@+id/llDiseases"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical" />
-
-            <!--<ListView-->
-            <!--android:id="@+id/lvDiseaseHistory"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:minHeight="400dp" />-->
-
-            <!--<LinearLayout-->
-            <!--android:id="@+id/llDiseaseHistory"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<EditText-->
-            <!--android:id="@+id/istorikoPathiseon"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:ems="10"-->
-            <!--android:hint=" π.χ. διαβήτης"-->
-            <!--android:inputType="text"-->
-            <!--android:textColor="#de000000"-->
-            <!--android:textSize="20sp" />-->
-
-            <!--</LinearLayout>-->
-
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="@string/doctors_info"
-                android:textColor="#003399"
-                android:textSize="30sp"
-                android:textStyle="italic" />
+                style="@style/InfoTextStyle"
+                android:textSize="30sp"/>
 
             <View
                 android:id="@+id/view4"
@@ -422,8 +367,7 @@
                     android:layout_weight="0.6"
                     android:padding="10dp"
                     android:text="@string/name"
-                    android:textColor="#de000000"
-                    android:textSize="20sp" />
+                    style="@style/InfoTextStyle"/>
 
 
                 <Spinner
@@ -446,7 +390,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/checkBox_routine_reminder"
-                    />
+                    style="@style/InfoTextStyle"/>
 
                 <TimePicker
                     android:id="@+id/timePicker"
@@ -472,12 +416,12 @@
 
         <Button
             android:id="@+id/btOk"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="@color/YellowGreen"
-            android:text="Ok" />
+            android:theme="@style/OkButtonStyle"
+            android:text="@string/ok" />
 
     </LinearLayout>
 

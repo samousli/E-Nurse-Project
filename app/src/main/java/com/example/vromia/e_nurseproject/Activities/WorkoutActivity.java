@@ -167,5 +167,4 @@ public class WorkoutActivity extends FragmentActivity {
     }
 
 
-
 }

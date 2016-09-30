@@ -62,7 +62,7 @@ public class HistoryAdapter extends CursorAdapter {
         TextView tvUnit = (TextView) view.findViewById(R.id.tvUnit);
 
         tvCategory.setText(cursor.getString(1));
-        String sep = inflater.getContext().getString(R.string.date_time_separator) + " ";
+        String sep = " " + inflater.getContext().getString(R.string.date_time_separator) + " ";
         if (isDiet) {
             tvUnit.setText("(" + inflater.getContext().getString(R.string.servings) + ")");
         } else {
