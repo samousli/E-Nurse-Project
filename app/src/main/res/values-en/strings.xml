@@ -75,5 +75,6 @@
     <string name="height">Height (cm)</string>
     <string name="body_info">Body Information</string>
     <string name="gender">gender</string>
-    <string name="ck_btn_string">Remind me to workout</string>
+    <string name="ck_btn_string">Remember to workout</string>
+    <string name="ok">Ok</string>
 </resources>

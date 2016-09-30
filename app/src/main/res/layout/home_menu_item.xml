@@ -8,12 +8,14 @@
 
     <ImageView
         android:id="@+id/ivGridItem"
+        style='@style/HomeImageStyle'
         android:layout_width="50dp"
         android:layout_height="50dp">
 
     </ImageView>
 
     <TextView
+        style="@style/InfoTextStyle"
         android:id="@+id/tvGridItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

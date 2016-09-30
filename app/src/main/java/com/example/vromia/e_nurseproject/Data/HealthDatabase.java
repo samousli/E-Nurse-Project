@@ -101,11 +101,11 @@ public class HealthDatabase extends SQLiteOpenHelper {
         cv.put(KEY_DIET_CATEGORY, item.getCategory());
         cv.put(KEY_DIET_DATE, item.getDate());
         cv.put(KEY_DIET_TIME, item.getTime());
-
-        Log.i("Category", item.getCategory());
-        Log.i("Amount", item.getAmount() + "");
-        Log.i("Time", item.getTime());
-        Log.i("Date", item.getDate());
+//
+//        Log.i("Category", item.getCategory());
+//        Log.i("Amount", item.getAmount() + "");
+//        Log.i("Time", item.getTime());
+//        Log.i("Date", item.getDate());
 
 
         db.insert(TABLE_DIET, null, cv);
@@ -145,7 +145,7 @@ public class HealthDatabase extends SQLiteOpenHelper {
     }
 
 
-    public boolean dietTupleExists(String category,String mealTime){
+    public boolean dietTupleExists(String category, String mealTime){
 
         Cursor cursor=getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_DIET + " WHERE "+KEY_DIET_CATEGORY + " = "+ "'"+category+"' AND "+KEY_DIET_TIME +" = '"+mealTime+"'" ,null);
         if(cursor.getCount()>0){

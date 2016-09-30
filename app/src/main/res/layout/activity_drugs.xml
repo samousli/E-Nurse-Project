@@ -10,7 +10,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -24,10 +24,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
-                    android:padding="10dp"
+                    android:padding="16dp"
                     android:text="@string/drug"
-                    android:textColor="#de000000"
-                    android:textSize="20sp" />
+                    style="@style/InfoTextStyle" />
 
                 <Spinner
                     android:id="@+id/spChooseEx"
@@ -42,12 +41,11 @@
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/line_separator" />
 
-
             <LinearLayout
                 android:id="@+id/llQuant"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -58,11 +56,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:lines="2"
-                    android:padding="10dp"
+                    android:padding="16dp"
                     android:text="@string/quantity"
-                    android:textColor="#de000000"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
+                    style="@style/InfoTextStyle" />
 
 
                 <EditText
@@ -71,11 +67,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
-                    android:editable="false"
-                    android:ems="10"
-                    android:hint="10"
                     android:inputType="number"
-                    android:textColor="#de000000" />
+                    style="@style/EditTextStyle" />
             </LinearLayout>
 
             <View
@@ -89,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="1"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 >
 
                 <me.grantland.widget.AutofitTextView
@@ -98,11 +91,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.6"
-                    android:padding="10dp"
+                    android:padding="16dp"
                     android:text="@string/tvCause"
-                    android:textColor="#de000000"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
+                    style="@style/InfoTextStyle"  />
 
                 <AutoCompleteTextView
                     android:id="@+id/etCause"
@@ -110,11 +101,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
-                    android:editable="false"
-                    android:ems="10"
-                    android:hint="Πονοκέφαλος"
-                    android:inputType="text"
-                    android:textColor="#de000000"/>
+                    android:editable="true"
+                    style="@style/EditTextStyle" />
             </LinearLayout>
 
             <View
@@ -129,18 +117,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="10dp"
+                android:padding="16dp"
                 android:text="@string/tvPeriod"
-                android:textColor="#de000000"
-                android:textSize="20sp"
-                android:textStyle="italic" />
+                style="@style/InfoTextStyle"  />
 
             <LinearLayout
                 android:id="@+id/lltod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="8dp"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -156,17 +142,15 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
                         android:text="@string/Morning"
-                        android:textColor="#de000000"
-                        android:textSize="20sp" />
+                        style="@style/InfoTextStyle" />
 
                     <RadioButton
                         android:id="@+id/rbNoon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
-                        android:text="Μεσημέρι"
-                        android:textColor="#de000000"
-                        android:textSize="20sp"
+                        android:text="@string/midday"
+                        style="@style/InfoTextStyle"
                         android:checked="false" />
 
                     <RadioButton
@@ -175,8 +159,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
                         android:text="@string/Night"
-                        android:textColor="#de000000"
-                        android:textSize="20sp"
+                        style="@style/InfoTextStyle"
                         android:checked="false" />
                 </RadioGroup>
 
@@ -192,7 +175,7 @@
                 android:id="@+id/lldate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -202,11 +185,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.3"
-                    android:padding="10dp"
+                    android:padding="16dp"
                     android:text="@string/DateTime"
-                    android:textColor="#de000000"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
+                    style="@style/InfoTextStyle"  />
 
                 <ImageButton
                     android:id="@+id/imbtDate"
@@ -227,13 +208,12 @@
 
         <Button
             android:id="@+id/btOk"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="@color/YellowGreen"
-            android:text="Ok"
-            android:elevation="0dp" />
+            android:text="@string/ok"
+            android:theme="@style/MyButton"/>
 
     </LinearLayout>
 

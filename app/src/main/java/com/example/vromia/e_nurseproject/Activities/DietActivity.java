@@ -94,7 +94,8 @@ public class DietActivity extends FragmentActivity {
                 .setFirstDayOfWeek(Calendar.SUNDAY)
                 .setPreselectedDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
                 .setDoneText("Yes")
-                .setCancelText("No");
+                .setCancelText("No")
+                .setThemeCustom(R.style.BetterPickersStyle);
 
         //Initialize variable date to current date
         String day = c.get(Calendar.DAY_OF_MONTH) + "";
@@ -112,7 +113,9 @@ public class DietActivity extends FragmentActivity {
                 .setOnTimeSetListener(timelistener)
                 .setStartTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE))
                 .setDoneText("Yes")
-                .setCancelText("No");
+                .setCancelText("No")
+                .setThemeCustom(R.style.BetterPickersStyle);
+
         // Initialize variable hour to current hour
         int temp_hour = c.get(Calendar.HOUR_OF_DAY);
         int temp_min = c.get(Calendar.MINUTE);

@@ -67,7 +67,7 @@ public class UserDetailsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_details);
+        setContentView(R.layout.activity_profile);
 
         manager = new SharedPrefsManager(UserDetailsActivity.this);
         diseases = new ArrayList<>();

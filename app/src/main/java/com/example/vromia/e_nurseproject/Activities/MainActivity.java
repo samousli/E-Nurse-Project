@@ -13,7 +13,6 @@ import com.example.vromia.e_nurseproject.R;
 import com.example.vromia.e_nurseproject.Utils.SharedPrefsManager;
 import com.example.vromia.e_nurseproject.Utils.StartServiceReceiver;
 import com.firebase.ui.auth.AuthUI;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,10 +33,9 @@ public class MainActivity extends Activity {
         //setContentView(R.layout.activity_main);
 
         //boolean isPass = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("PREFS_START_OFF_APP" , false);
-        SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(MainActivity.this);
-
-        boolean pass = sharedPrefsManager.getPrefsStart();
-
+//        SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(MainActivity.this);
+//
+//        boolean pass = sharedPrefsManager.getPrefsStart();
 
         AlarmManager service = (AlarmManager) this
                 .getSystemService(ALARM_SERVICE);
@@ -94,32 +92,32 @@ public class MainActivity extends Activity {
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
 
-                //Comment the following if any crush happens
-                //from here
-//                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//
-//                FirebaseDatabase.getInstance().getReference().child("users").child(uid).addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        if (dataSnapshot.exists()) {
-//                            startActivity(new Intent(MainActivity.this, HomeActivity.class));
-//                            finish();
-//                        } else {
-//                            startActivity(new Intent(MainActivity.this, UserDetailsActivity.class));
-//                            finish();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
+//                Comment the following if any crush happens
+//                from here
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                FirebaseDatabase.getInstance().getReference().child("users").child(uid).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                            finish();
+                        } else {
+                            startActivity(new Intent(MainActivity.this, UserDetailsActivity.class));
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
                 //to here
                 //comment out the following
 
-                startActivity(new Intent(MainActivity.this, HomeActivity.class));
-                finish();
+//                startActivity(new Intent(MainActivity.this, HomeActivity.class));
+//                finish();
 
 
             } else {
